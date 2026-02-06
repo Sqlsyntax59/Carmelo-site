@@ -86,8 +86,9 @@ function Navbar({ activeSection }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const links = [
-    { id: "hero", label: "Accueil" }, { id: "about", label: "Parcours" },
-    { id: "gallery", label: "Galerie" }, { id: "palmares", label: "Palmarès" },
+    { id: "hero", label: "Accueil" }, { id: "discipline", label: "Discipline" },
+    { id: "about", label: "Parcours" }, { id: "gallery", label: "Galerie" },
+    { id: "palmares", label: "Palmarès" }, { id: "team", label: "L'Équipe" },
     { id: "sponsors", label: "Sponsors" }, { id: "contact", label: "Contact" },
   ];
   useEffect(() => { const h = () => setScrolled(window.scrollY > 50); window.addEventListener("scroll", h, { passive: true }); return () => window.removeEventListener("scroll", h); }, []);
@@ -171,11 +172,11 @@ function HeroSection() {
           padding: "5px 18px", border: "1px solid rgba(207,155,59,0.25)", background: "rgba(207,155,59,0.06)",
           opacity: ld ? 1 : 0, transition: "opacity 0.8s 0.4s"
         }}>
-          <span style={{ fontSize: 10 }}>🥋</span>
+          <img src="/images/logo-ffk.svg" alt="FFK" style={{ height: 18, flexShrink: 0, filter: "brightness(1.2)" }} />
           <span style={{ fontSize: 9, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Fédération Française de Karaté</span>
         </div>
 
-        <div style={{ fontSize: 11, letterSpacing: 8, color: "rgba(255,255,255,0.3)", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 600, textTransform: "uppercase" }}>
+        <div style={{ fontSize: 11, letterSpacing: 8, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 600, textTransform: "uppercase" }}>
           {FIGHTER.category}
         </div>
 
@@ -198,7 +199,7 @@ function HeroSection() {
           color: "#06060a", fontFamily: "'Oswald',sans-serif", fontWeight: 700,
           fontSize: 13, letterSpacing: 4, textTransform: "uppercase",
           boxShadow: "0 0 50px rgba(207,155,59,0.2), inset 0 1px 0 rgba(255,255,255,0.2)"
-        }}>🏆 2x {FIGHTER.title}</div>
+        }}><svg width="18" height="18" viewBox="0 0 24 24" fill="#06060a" style={{ verticalAlign: "middle", marginRight: 6, marginTop: -2 }}><path d="M5 3h14v2a7 7 0 01-14 0V3z" fill="#06060a" stroke="#06060a" strokeWidth="1"/><path d="M7.5 3H3v2a3 3 0 003 3h.5" fill="none" stroke="#06060a" strokeWidth="1.5" strokeLinecap="round"/><path d="M16.5 3H21v2a3 3 0 01-3 3h-.5" fill="none" stroke="#06060a" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 12v3" stroke="#06060a" strokeWidth="1.5"/><path d="M8 18h8v1H8z" fill="#06060a"/><path d="M9 15h6a1 1 0 011 1v2H8v-2a1 1 0 011-1z" fill="#06060a"/></svg>2x {FIGHTER.title}</div>
 
         <div style={{ marginTop: 16, fontFamily: "'Oswald',sans-serif", fontSize: 20, letterSpacing: 6, color: "rgba(255,255,255,0.7)" }}>
           <span style={{ color: "#4ade80", fontWeight: 700 }}>{FIGHTER.record.wins}W</span>
@@ -249,35 +250,35 @@ function AboutSection() {
         </h2>
         <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, lineHeight: 2, color: "rgba(255,255,255,0.48)", maxWidth: 620 }}>{FIGHTER.bio}</p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 1, marginTop: 48, background: "rgba(207,155,59,0.05)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 1, marginTop: 48, background: "rgba(207,155,59,0.1)" }}>
           {[
             { l: "Âge", v: "18 ans" }, { l: "Ville", v: "Orléans" }, { l: "Catégorie", v: "-70 kg" },
             { l: "Club", v: "APRAM" }, { l: "Début", v: "2023" }, { l: "Fédération", v: "FFK" },
           ].map((f, i) => (
-            <div key={i} style={{ padding: "20px 18px", background: "#06060a" }}>
-              <div style={{ fontSize: 8, letterSpacing: 4, color: "rgba(255,255,255,0.22)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 5, fontWeight: 700 }}>{f.l}</div>
-              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "#fff", fontWeight: 500, letterSpacing: 1 }}>{f.v}</div>
+            <div key={i} style={{ padding: "22px 20px", background: "rgba(6,6,10,0.95)", borderTop: "2px solid rgba(207,155,59,0.15)" }}>
+              <div style={{ fontSize: 8, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 6, fontWeight: 700, opacity: 0.7 }}>{f.l}</div>
+              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, color: "#fff", fontWeight: 600, letterSpacing: 1 }}>{f.v}</div>
             </div>
           ))}
         </div>
 
-        <div style={{ marginTop: 48 }}>
-          <div style={{ fontSize: 9, letterSpacing: 5, color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>Méthodes de victoire — 18 wins</div>
-          <div style={{ display: "flex", gap: 2, height: 7, overflow: "hidden", maxWidth: 480 }}>
+        <div style={{ marginTop: 48, padding: "28px 24px", background: "rgba(207,155,59,0.03)", border: "1px solid rgba(207,155,59,0.08)" }}>
+          <div style={{ fontSize: 10, letterSpacing: 5, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 20, fontWeight: 700 }}>Méthodes de victoire — 18 wins</div>
+          <div style={{ display: "flex", gap: 2, height: 10, overflow: "hidden", maxWidth: 480, borderRadius: 2 }}>
             <div style={{ flex: 14, background: "linear-gradient(90deg,#cf9b3b,#e8b84a)" }} />
-            <div style={{ flex: 3, background: "#6b7280" }} />
+            <div style={{ flex: 3, background: "rgba(255,255,255,0.25)" }} />
             <div style={{ flex: 1, background: "#ef4444" }} />
           </div>
-          <div style={{ display: "flex", gap: 24, marginTop: 12, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 28, marginTop: 16, flexWrap: "wrap" }}>
             {[
               { l: "Soumissions", n: 14, c: "#cf9b3b", p: "78%" },
-              { l: "Décisions", n: 3, c: "#6b7280", p: "17%" },
+              { l: "Décisions", n: 3, c: "rgba(255,255,255,0.5)", p: "17%" },
               { l: "KO/TKO", n: 1, c: "#ef4444", p: "5%" },
             ].map((m, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div style={{ width: 9, height: 9, background: m.c }} />
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.4)", fontWeight: 500 }}>
-                  {m.l} · {m.n} <span style={{ color: m.c }}>({m.p})</span>
+                <div style={{ width: 10, height: 10, background: m.c, borderRadius: 2 }} />
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.6)", fontWeight: 500 }}>
+                  {m.l} · {m.n} <span style={{ color: m.c, fontWeight: 700 }}>({m.p})</span>
                 </span>
               </div>
             ))}
@@ -435,6 +436,43 @@ function PalmaresSection() {
             </div>
           ))}
         </div>
+
+        {/* Et ensuite — Ambition fusionnée */}
+        <div style={{ marginTop: 64, borderTop: "1px solid rgba(207,155,59,0.08)", paddingTop: 48 }}>
+          <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Et ensuite</div>
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(22px,4vw,36px)", color: "#fff", lineHeight: 1.1, margin: "0 0 16px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
+            L'objectif est clair<span style={{ color: "#cf9b3b" }}>.</span>
+          </h3>
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: "rgba(255,255,255,0.42)", maxWidth: 560, marginBottom: 36 }}>
+            À 18 ans, Carmelo a déjà prouvé qu'il fait partie de l'élite française. La prochaine étape : la scène européenne, puis le circuit professionnel.
+          </p>
+          {[
+            { phase: "Court terme", goal: "Passage professionnel", icon: "⚡" },
+            { phase: "Moyen terme", goal: "Championnat d'Europe FFK", icon: "🇪🇺" },
+            { phase: "Long terme", goal: "Représenter la France à l'international", icon: "🇫🇷" },
+          ].map((o, i) => (
+            <div key={i} style={{
+              display: "flex", gap: 20, alignItems: "flex-start", padding: "24px 0",
+              borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.04)" : "none",
+              opacity: v ? 1 : 0, transition: `opacity 0.6s ${0.4 + i * 0.15}s`
+            }}>
+              <div style={{
+                width: 42, height: 42, display: "flex", alignItems: "center", justifyContent: "center",
+                background: "rgba(207,155,59,0.08)", border: "1px solid rgba(207,155,59,0.12)", fontSize: 18, flexShrink: 0
+              }}>{o.icon}</div>
+              <div>
+                <div style={{ fontSize: 9, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 5, fontWeight: 700 }}>{o.phase}</div>
+                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, color: "#fff", fontWeight: 500, letterSpacing: 1 }}>{o.goal}</div>
+              </div>
+            </div>
+          ))}
+          <div style={{ marginTop: 32, padding: "28px 24px", borderLeft: "2px solid #cf9b3b", background: "rgba(207,155,59,0.03)" }}>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, lineHeight: 1.8, color: "rgba(255,255,255,0.6)", fontStyle: "italic", margin: 0 }}>
+              « 14 soumissions sur 18 victoires. Sur le sol, personne ne m'échappe. »
+            </p>
+            <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 12, letterSpacing: 4, color: "#cf9b3b", marginTop: 14, textTransform: "uppercase" }}>— Carmelo Zambelli</div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -444,7 +482,7 @@ function PalmaresSection() {
 function CoachSection() {
   const [ref, v] = useReveal();
   return (
-    <section id="coach" ref={ref} style={{
+    <section id="team" ref={ref} style={{
       padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)",
       background: "linear-gradient(180deg, #0a0806 0%, #06060a 100%)",
       borderTop: "1px solid rgba(207,155,59,0.06)", position: "relative"
@@ -455,7 +493,7 @@ function CoachSection() {
         opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)",
         transition: "all 1s cubic-bezier(0.16,1,0.3,1)"
       }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Le Coach</div>
+        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>L'Équipe</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 48px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Maître Philippe<br />Rollin<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
@@ -522,61 +560,11 @@ function CoachSection() {
   );
 }
 
-/* ─── Ambition ─── */
-function AmbitionSection() {
-  const [ref, v] = useReveal();
-  return (
-    <section id="ambition" ref={ref} style={{
-      padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)", background: "linear-gradient(180deg, #08080e 0%, #0a0a10 100%)",
-      borderTop: "1px solid rgba(207,155,59,0.08)", position: "relative", overflow: "hidden"
-    }}>
-      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 40% 50% at 80% 50%, rgba(207,155,59,0.04) 0%, transparent 70%)" }} />
-      <div style={{ maxWidth: 960, margin: "0 auto", position: "relative", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Vision</div>
-        <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
-          L'objectif est clair<span style={{ color: "#cf9b3b" }}>.</span>
-        </h2>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, lineHeight: 2, color: "rgba(255,255,255,0.42)", maxWidth: 560, marginBottom: 44 }}>
-          À 18 ans, Carmelo a déjà prouvé qu'il fait partie de l'élite française. La prochaine étape : la scène européenne, puis le circuit professionnel.
-        </p>
-
-        {[
-          { phase: "Court terme", goal: "Passage professionnel", icon: "⚡" },
-          { phase: "Moyen terme", goal: "Championnat d'Europe FFK", icon: "🇪🇺" },
-          { phase: "Long terme", goal: "Représenter la France à l'international", icon: "🇫🇷" },
-        ].map((o, i) => (
-          <div key={i} style={{
-            display: "flex", gap: 20, alignItems: "flex-start", padding: "24px 0",
-            borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.04)" : "none",
-            opacity: v ? 1 : 0, transition: `opacity 0.6s ${0.4 + i * 0.15}s`
-          }}>
-            <div style={{
-              width: 42, height: 42, display: "flex", alignItems: "center", justifyContent: "center",
-              background: "rgba(207,155,59,0.08)", border: "1px solid rgba(207,155,59,0.12)", fontSize: 18, flexShrink: 0
-            }}>{o.icon}</div>
-            <div>
-              <div style={{ fontSize: 9, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 5, fontWeight: 700 }}>{o.phase}</div>
-              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, color: "#fff", fontWeight: 500, letterSpacing: 1 }}>{o.goal}</div>
-            </div>
-          </div>
-        ))}
-
-        <div style={{ marginTop: 56, padding: "32px 28px", borderLeft: "2px solid #cf9b3b", background: "rgba(207,155,59,0.03)" }}>
-          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 17, lineHeight: 1.8, color: "rgba(255,255,255,0.6)", fontStyle: "italic", margin: 0 }}>
-            « 14 soumissions sur 18 victoires. Sur le sol, personne ne m'échappe. »
-          </p>
-          <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 12, letterSpacing: 4, color: "#cf9b3b", marginTop: 14, textTransform: "uppercase" }}>— Carmelo Zambelli</div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ─── Karaté Mix FFK ─── */
 function KarateMixSection() {
   const [ref, v] = useReveal();
   return (
-    <section id="karatemix" ref={ref} style={{
+    <section id="discipline" ref={ref} style={{
       padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)",
       background: "linear-gradient(180deg, #0a0a10 0%, #0a0806 100%)",
       borderTop: "1px solid rgba(207,155,59,0.08)", position: "relative", overflow: "hidden"
@@ -597,16 +585,16 @@ function KarateMixSection() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 2 }}>
           {[
-            { icon: "🥋", title: "Frappe debout", desc: "Poings, pieds, genoux issus du karaté et du kickboxing" },
-            { icon: "🤼", title: "Projections", desc: "Amenées au sol héritées du judo et du jujitsu" },
-            { icon: "🔒", title: "Soumissions", desc: "Clés articulaires et étranglements au sol" },
+            { svg: <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M18 8c0-1.1-.4-2.1-1-2.8L13.4 2c-.8-.7-2-.7-2.8 0L7 5.2C6.4 5.9 6 6.9 6 8c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4z" stroke="#cf9b3b" strokeWidth="1.5" strokeLinejoin="round"/><path d="M9 12l-2 4.5M15 12l2 4.5M12 12v7" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/><path d="M7 22h10" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: "Frappe debout", desc: "Poings, pieds, genoux issus du karaté et du kickboxing" },
+            { svg: <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="4" r="2" stroke="#cf9b3b" strokeWidth="1.5"/><circle cx="17" cy="6" r="2" stroke="#cf9b3b" strokeWidth="1.5"/><path d="M5 14l4-4 3 2 4-4" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 18c1-2 3-4 6-4s4 1 6 1 4-2 6-4" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/><path d="M7 22c2-2 4-3 5-3s3 1 5 3" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: "Projections", desc: "Amenées au sol héritées du judo et du jujitsu" },
+            { svg: <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="5" y="8" width="14" height="10" rx="3" stroke="#cf9b3b" strokeWidth="1.5"/><path d="M12 8V5" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/><circle cx="12" cy="3.5" r="1.5" stroke="#cf9b3b" strokeWidth="1.2"/><path d="M9.5 13h5M12 11v4" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: "Soumissions", desc: "Clés articulaires et étranglements au sol" },
           ].map((item, i) => (
             <div key={i} style={{
               padding: "28px 22px", background: "rgba(255,255,255,0.012)",
               border: "1px solid rgba(207,155,59,0.06)", transition: "all 0.3s",
               opacity: v ? 1 : 0, transitionDelay: `${0.3 + i * 0.12}s`
             }}>
-              <div style={{ fontSize: 28, marginBottom: 14 }}>{item.icon}</div>
+              <div style={{ marginBottom: 14 }}>{item.svg}</div>
               <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "#fff", fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: "uppercase" }}>{item.title}</div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.7 }}>{item.desc}</div>
             </div>
@@ -620,6 +608,7 @@ function KarateMixSection() {
             fontSize: 11, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s",
             background: "rgba(207,155,59,0.04)", display: "inline-flex", alignItems: "center", gap: 8
           }}>
+            <img src="/images/logo-ffk.svg" alt="FFK" style={{ height: 16, filter: "brightness(1.2)" }} />
             Site officiel FFK
             <span style={{ fontSize: 14 }}>&#8599;</span>
           </a>
@@ -711,12 +700,12 @@ function ContactSection() {
               <input type="text" name="name" placeholder="Nom" required style={{ ...iS, flex: 1, minWidth: 140 }} />
               <input type="email" name="email" placeholder="Email" required style={{ ...iS, flex: 1, minWidth: 140 }} />
             </div>
-            <select name="type" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.35)" }}>
-              <option value="">Type de demande</option>
-              <option>Sponsoring / Partenariat</option>
-              <option>Presse / Média</option>
-              <option>Événement</option>
-              <option>Autre</option>
+            <select name="type" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.7)" }}>
+              <option value="" style={{ background: "#0a0a10", color: "rgba(255,255,255,0.5)" }}>Type de demande</option>
+              <option style={{ background: "#0a0a10", color: "#fff" }}>Sponsoring / Partenariat</option>
+              <option style={{ background: "#0a0a10", color: "#fff" }}>Presse / Média</option>
+              <option style={{ background: "#0a0a10", color: "#fff" }}>Événement</option>
+              <option style={{ background: "#0a0a10", color: "#fff" }}>Autre</option>
             </select>
             <textarea name="message" placeholder="Votre message..." rows={4} required style={{ ...iS, resize: "vertical" }} />
             <button type="submit" disabled={sending} className="cP" style={{
@@ -777,6 +766,102 @@ function ScrollProgress() {
   );
 }
 
+/* ─── Floating Bio Card ─── */
+function FloatingBio() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const h = () => {
+      const hero = document.getElementById("hero");
+      const contact = document.getElementById("contact");
+      if (!hero || !contact) return;
+      const pastHero = hero.getBoundingClientRect().bottom < 0;
+      const nearContact = contact.getBoundingClientRect().top < window.innerHeight + 100;
+      setVisible(pastHero && !nearContact);
+    };
+    window.addEventListener("scroll", h, { passive: true });
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+
+  return (
+    <div className="floatingBio" style={{
+      position: "fixed", right: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : 280}px)`,
+      zIndex: 950, width: 220, padding: "22px 18px",
+      background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+      border: "1px solid rgba(207,155,59,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
+      transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s",
+      opacity: visible ? 1 : 0, pointerEvents: visible ? "auto" : "none"
+    }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #cf9b3b, #e8b84a, #cf9b3b)" }} />
+
+      <div style={{ textAlign: "center", marginBottom: 14 }}>
+        <div style={{ position: "relative", width: 56, height: 56, margin: "0 auto 10px" }}>
+          <div style={{
+            width: 56, height: 56, borderRadius: "50%",
+            border: "2px solid #cf9b3b", overflow: "hidden",
+            boxShadow: "0 0 16px rgba(207,155,59,0.2)"
+          }}>
+            <img src="/images/portrait-carmelo.png" alt="Carmelo Zambelli" style={{
+              width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%"
+            }} />
+          </div>
+          <div style={{
+            position: "absolute", bottom: -2, right: -2,
+            width: 20, height: 14, borderRadius: 3,
+            overflow: "hidden", border: "1.5px solid rgba(255,255,255,0.15)",
+            boxShadow: "0 1px 4px rgba(0,0,0,0.4)",
+            display: "flex"
+          }}>
+            <div style={{ flex: 1, background: "#002395" }} />
+            <div style={{ flex: 1, background: "#fff" }} />
+            <div style={{ flex: 1, background: "#ED2939" }} />
+          </div>
+        </div>
+        <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 15, color: "#fff", letterSpacing: 3, fontWeight: 700 }}>
+          CARMELO <span style={{ color: "#cf9b3b" }}>ZAMBELLI</span>
+        </div>
+        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.5)", letterSpacing: 2, fontFamily: "'Inter',sans-serif", marginTop: 4 }}>-70KG · KARATÉ MIX FFK</div>
+      </div>
+
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 12 }}>
+        <p style={{
+          fontFamily: "'Inter',sans-serif", fontSize: 11, lineHeight: 1.7,
+          color: "rgba(255,255,255,0.72)", margin: 0
+        }}>
+          Passionné d'arts martiaux depuis l'enfance, Carmelo Zambelli est un jeune talent du Karaté Mix. Champion de France à 18 ans, il poursuit son ascension sur le circuit européen.
+        </p>
+      </div>
+
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 14 }}>
+        <p style={{
+          fontFamily: "'Inter',sans-serif", fontSize: 10, lineHeight: 1.7,
+          color: "rgba(255,255,255,0.6)", margin: 0
+        }}>
+          Pour franchir une nouvelle étape, il recherche des partenaires prêts à soutenir un athlète ambitieux et à forte visibilité.
+        </p>
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 10 }}>
+        {[
+          { n: "18", l: "Wins" }, { n: "14", l: "Sub" }, { n: "86%", l: "Rate" },
+        ].map((s, i) => (
+          <div key={i} style={{ textAlign: "center" }}>
+            <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, color: "#cf9b3b", fontWeight: 700, lineHeight: 1 }}>{s.n}</div>
+            <div style={{ fontSize: 7, letterSpacing: 2, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 3 }}>{s.l}</div>
+          </div>
+        ))}
+      </div>
+
+      <a href="#sponsors" className="cP" style={{
+        display: "block", textAlign: "center", padding: "10px 0",
+        background: "linear-gradient(135deg, #cf9b3b, #a67c2e)",
+        color: "#06060a", textDecoration: "none", fontFamily: "'Oswald',sans-serif",
+        fontSize: 10, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700,
+        boxShadow: "0 4px 20px rgba(207,155,59,0.2)", transition: "all 0.3s"
+      }}>Devenir Partenaire</a>
+    </div>
+  );
+}
+
 /* ─── Scroll to top ─── */
 function ScrollToTop() {
   const [show, setShow] = useState(false);
@@ -802,7 +887,7 @@ export default function App() {
   const [active, setActive] = useState("hero");
   useEffect(() => {
     const h = () => {
-      const secs = ["hero", "about", "gallery", "palmares", "coach", "ambition", "karatemix", "sponsors", "contact"];
+      const secs = ["hero", "discipline", "about", "gallery", "palmares", "team", "sponsors", "contact"];
       for (const id of secs) {
         const el = document.getElementById(id);
         if (el) { const r = el.getBoundingClientRect(); if (r.top <= 140 && r.bottom > 140) { setActive(id); break; } }
@@ -828,20 +913,21 @@ export default function App() {
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
-        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}}
+        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{display:none!important}}
+        @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
       <ScrollProgress />
       <Navbar activeSection={active} />
       <HeroSection />
+      <KarateMixSection />
       <AboutSection />
       <GallerySection />
       <PalmaresSection />
       <CoachSection />
-      <AmbitionSection />
-      <KarateMixSection />
       <SponsorsSection />
       <ContactSection />
       <Footer />
+      <FloatingBio />
       <ScrollToTop />
     </div>
   );
