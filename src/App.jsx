@@ -1140,9 +1140,8 @@ function FloatingSpotify() {
   const [visible, setVisible] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const playlists = [
-    { name: "Training Beast Mode", id: "37i9dQZF1DX76Wlfdnj7AP" },
-    { name: "Warm-Up Combat", id: "37i9dQZF1DX3ZeFHRhhi7Y" },
-    { name: "Focus & Discipline", id: "37i9dQZF1DWZeKCadgRdKQ" },
+    { name: "Workout Motivation", id: "37i9dQZF1DWSJaGvRwFnf6" },
+    { name: "Training Mix", id: "2SrsE5W2WSPRmUWHjvXxum" },
   ];
   useEffect(() => {
     const h = () => {
@@ -1217,7 +1216,7 @@ function FloatingSpotify() {
               background: `linear-gradient(135deg, rgba(30,215,96,${0.15 + i * 0.08}), rgba(6,6,10,0.8))`,
               display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0
             }}>
-              <span style={{ fontSize: 14 }}>{["🔥", "⚡", "🎯"][i]}</span>
+              <span style={{ fontSize: 14 }}>{["🔥", "⚡"][i]}</span>
             </div>
             <div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.85)", fontWeight: 600, lineHeight: 1.3 }}>{pl.name}</div>
