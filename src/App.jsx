@@ -1135,6 +1135,109 @@ function Footer() {
   );
 }
 
+/* ─── Floating Spotify ─── */
+function FloatingSpotify() {
+  const [visible, setVisible] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const playlists = [
+    { name: "Training Beast Mode", id: "37i9dQZF1DX76Wlfdnj7AP" },
+    { name: "Warm-Up Combat", id: "37i9dQZF1DX3ZeFHRhhi7Y" },
+    { name: "Focus & Discipline", id: "37i9dQZF1DWZeKCadgRdKQ" },
+  ];
+  useEffect(() => {
+    const h = () => {
+      const hero = document.getElementById("hero");
+      const contact = document.getElementById("contact");
+      if (!hero || !contact) return;
+      const pastHero = hero.getBoundingClientRect().bottom < 0;
+      const atContact = contact.getBoundingClientRect().top < window.innerHeight * 0.25;
+      setVisible(pastHero && !atContact);
+      if (!pastHero || atContact) setMobileOpen(false);
+    };
+    window.addEventListener("scroll", h, { passive: true });
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+
+  return (
+    <>
+      {/* Onglet mobile gauche */}
+      <button className="mSpotifyTab" onClick={() => setMobileOpen(true)} style={{
+        position: "fixed", left: 0, top: "50%", transform: "translateY(-50%)",
+        zIndex: 951, display: "none",
+        background: "rgba(6,6,10,0.92)", backdropFilter: "blur(12px)",
+        border: "1px solid rgba(30,215,96,0.25)", borderLeft: "none",
+        borderRadius: "0 10px 10px 0",
+        padding: "10px 7px", cursor: "pointer",
+        opacity: visible && !mobileOpen ? 1 : 0,
+        pointerEvents: visible && !mobileOpen ? "auto" : "none",
+        transition: "opacity 0.3s",
+        flexDirection: "column", alignItems: "center", gap: 6,
+        boxShadow: "4px 0 20px rgba(0,0,0,0.5)"
+      }}>
+        <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
+        <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 8, color: "#1DB954", letterSpacing: 1, writingMode: "vertical-lr" }}>MIX</span>
+      </button>
+
+      {/* Carte flottante gauche */}
+      <div className={`floatingSpotify${mobileOpen ? " mSpOpen" : ""}`} style={{
+        position: "fixed", left: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : -280}px)`,
+        zIndex: 950, width: 220, padding: "22px 18px",
+        background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid rgba(30,215,96,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
+        transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s",
+        opacity: visible ? 1 : 0, pointerEvents: visible ? "auto" : "none"
+      }}>
+        {/* Bouton fermer mobile */}
+        <button className="mSpotifyClose" onClick={() => setMobileOpen(false)} style={{
+          display: "none", position: "absolute", top: 8, right: 8,
+          background: "none", border: "none", color: "rgba(255,255,255,0.5)",
+          fontSize: 18, cursor: "pointer", lineHeight: 1, padding: 4, zIndex: 2
+        }}>&#10005;</button>
+
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #1DB954, #1ed760, #1DB954)" }} />
+
+        <div style={{ textAlign: "center", marginBottom: 16 }}>
+          <svg width="28" height="28" viewBox="0 0 24 24" style={{ marginBottom: 8 }}><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
+          <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 13, color: "#fff", letterSpacing: 3, fontWeight: 700, textTransform: "uppercase" }}>
+            Mes <span style={{ color: "#1DB954" }}>Playlists</span>
+          </div>
+          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.5)", letterSpacing: 2, fontFamily: "'Inter',sans-serif", marginTop: 4 }}>TRAINING · COMBAT · FOCUS</div>
+        </div>
+
+        {playlists.map((pl, i) => (
+          <a key={i} href={`https://open.spotify.com/playlist/${pl.id}`} target="_blank" rel="noopener noreferrer" style={{
+            display: "flex", alignItems: "center", gap: 10,
+            padding: "10px 0", textDecoration: "none",
+            borderTop: i === 0 ? "1px solid rgba(255,255,255,0.05)" : "none",
+            borderBottom: "1px solid rgba(255,255,255,0.05)",
+            transition: "all 0.3s"
+          }}>
+            <div style={{
+              width: 32, height: 32, borderRadius: 4,
+              background: `linear-gradient(135deg, rgba(30,215,96,${0.15 + i * 0.08}), rgba(6,6,10,0.8))`,
+              display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0
+            }}>
+              <span style={{ fontSize: 14 }}>{["🔥", "⚡", "🎯"][i]}</span>
+            </div>
+            <div>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.85)", fontWeight: 600, lineHeight: 1.3 }}>{pl.name}</div>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, color: "#1DB954", letterSpacing: 1, textTransform: "uppercase", marginTop: 2 }}>Écouter</div>
+            </div>
+          </a>
+        ))}
+
+        <a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" style={{
+          display: "block", textAlign: "center", padding: "10px 0", marginTop: 14,
+          background: "linear-gradient(135deg, #1DB954, #169c46)",
+          color: "#fff", textDecoration: "none", fontFamily: "'Oswald',sans-serif",
+          fontSize: 10, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700,
+          transition: "all 0.3s"
+        }}>Ouvrir Spotify</a>
+      </div>
+    </>
+  );
+}
+
 /* ─── Scroll Progress Bar ─── */
 function ScrollProgress() {
   const [progress, setProgress] = useState(0);
@@ -1372,8 +1475,8 @@ export default function App() {
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
-        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
-        @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}}
+        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.floatingSpotify{transform:translateY(-50%) translateX(-280px)!important;opacity:0!important;pointer-events:none!important}.floatingSpotify.mSpOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;left:12px!important;width:200px!important;padding:18px 14px!important}.mSpotifyTab{display:flex!important}.mSpotifyClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
+        @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}.floatingSpotify{left:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
       <ScrollProgress />
       <Navbar activeSection={active} />
@@ -1388,6 +1491,7 @@ export default function App() {
       <ContactSection />
       <Footer />
       <FloatingBio />
+      <FloatingSpotify />
       <ScrollToTop />
       <FavoriteBanner />
     </div>
