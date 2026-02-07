@@ -85,6 +85,31 @@ function useReveal() {
   return [ref, v];
 }
 
+function useSwipe(ref, { onSwipeLeft, onSwipeRight }) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let startX = 0, startY = 0, tracking = false;
+    const onStart = (e) => { startX = e.touches[0].clientX; startY = e.touches[0].clientY; tracking = true; };
+    const onMove = (e) => {
+      if (!tracking) return;
+      const dx = e.touches[0].clientX - startX;
+      const dy = e.touches[0].clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) e.preventDefault();
+    };
+    const onEnd = (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) { dx < 0 ? onSwipeLeft() : onSwipeRight(); }
+    };
+    el.addEventListener("touchstart", onStart, { passive: true });
+    el.addEventListener("touchmove", onMove, { passive: false });
+    el.addEventListener("touchend", onEnd, { passive: true });
+    return () => { el.removeEventListener("touchstart", onStart); el.removeEventListener("touchmove", onMove); el.removeEventListener("touchend", onEnd); };
+  }, [ref, onSwipeLeft, onSwipeRight]);
+}
+
 /* ─── Navbar ─── */
 function Navbar({ activeSection }) {
   const [open, setOpen] = useState(false);
@@ -328,12 +353,18 @@ function GallerySection() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
+  const carouselRef = useRef(null);
 
   useEffect(() => {
     if (paused) return;
     timerRef.current = setInterval(() => setActive(p => (p + 1) % PHOTOS.length), 4000);
     return () => clearInterval(timerRef.current);
   }, [paused]);
+
+  useSwipe(carouselRef, {
+    onSwipeLeft: () => { setActive(p => (p + 1) % PHOTOS.length); setPaused(true); },
+    onSwipeRight: () => { setActive(p => (p - 1 + PHOTOS.length) % PHOTOS.length); setPaused(true); },
+  });
 
   const photoColors = ["#1a1210", "#0d1020", "#120f0a", "#0a1018"];
   const photoGradients = [
@@ -362,6 +393,7 @@ function GallerySection() {
 
         {/* Main display with crossfade */}
         <div
+          ref={carouselRef}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           style={{
