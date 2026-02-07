@@ -312,7 +312,7 @@ function AboutSection() {
       <div style={{ maxWidth: 960, margin: "0 auto", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
         <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Parcours</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 36px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
-          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-3ans.png" alt="3 ans" width="52" height="52" loading="lazy" style={{ height: "clamp(32px,4.5vw,52px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-titres.png" alt="Titres" width="58" height="58" loading="lazy" style={{ height: "clamp(36px,5vw,58px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br /><span className="fireLine" style={{
+          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-3ans.png" alt="3 ans" width="52" height="52" loading="lazy" style={{ height: "clamp(32px,4.5vw,52px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-titres.png" alt="Titres" width="49" height="58" loading="lazy" style={{ height: "clamp(36px,5vw,58px)", width: "auto", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br /><span className="fireLine" style={{
             fontSize: "clamp(20px,3.5vw,40px)",
             background: "linear-gradient(90deg, rgba(255,255,255,0.15) 0%, #cf9b3b 15%, #e8b84a 25%, #ff6b2b 40%, #cf9b3b 55%, rgba(255,255,255,0.15) 70%)",
             backgroundSize: "300% 100%",
@@ -320,7 +320,7 @@ function AboutSection() {
             animation: "fireSweep 3s ease-in-out infinite",
             display: "inline-block",
             filter: "drop-shadow(0 0 12px rgba(207,155,59,0.4))"
-          }}>Une trajectoire fulgurante<span style={{ color: "#cf9b3b" }}>.</span></span>{" "}<img src="/images/picto-trajectoire.png" alt="Trajectoire" width="48" height="48" loading="lazy" style={{ height: "clamp(32px,4vw,48px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} />
+          }}>Une trajectoire fulgurante<span style={{ color: "#cf9b3b" }}>.</span></span>{" "}<img src="/images/picto-trajectoire.png" alt="Trajectoire" width="41" height="48" loading="lazy" style={{ height: "clamp(32px,4vw,48px)", width: "auto", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} />
         </h2>
         <div style={{ maxWidth: 620 }}>
           {FIGHTER.bio.map((p, i) => (
@@ -811,7 +811,7 @@ function YouTubeFacade({ videoId, start = 0 }) {
           />
         ) : (
           <>
-            <img src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`} alt="Karaté Mix — Saison 2024/2025" width="480" height="360" loading="lazy" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "100%", minHeight: "100%", objectFit: "cover" }} />
+            <img src="/images/yt-karate-mix.jpg" alt="Karaté Mix — Saison 2024/2025" width="480" height="360" loading="lazy" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "100%", minHeight: "100%", objectFit: "cover" }} />
             <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <div style={{ width: 68, height: 48, background: "rgba(207,155,59,0.9)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(0,0,0,0.5)", transition: "transform 0.3s" }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="#06060a"><path d="M8 5v14l11-7z"/></svg>
@@ -1116,14 +1116,14 @@ function SponsorMarquee() {
       <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 60, background: "linear-gradient(270deg, #04040a, transparent)", zIndex: 2 }} />
       <div style={{ display: "flex", gap: 48, animation: "sponsorScroll 30s linear infinite", width: "max-content" }}>
         {row.map((l, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0, opacity: 0.18 }}>
-            <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 10, color: "#cf9b3b", lineHeight: 1 }}>{l.icon}</span>
-            <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 14, color: "#fff", letterSpacing: 4, textTransform: "uppercase", fontWeight: 600, whiteSpace: "nowrap" }}>{l.name}</span>
+          <div key={i} aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+            <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 10, color: "rgba(207,155,59,0.22)", lineHeight: 1 }}>{l.icon}</span>
+            <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 14, color: "rgba(255,255,255,0.22)", letterSpacing: 4, textTransform: "uppercase", fontWeight: 600, whiteSpace: "nowrap" }}>{l.name}</span>
           </div>
         ))}
       </div>
       <div style={{ textAlign: "center", marginTop: 10 }}>
-        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.28)", letterSpacing: 2, textTransform: "uppercase" }}>Emplacement réservé aux partenaires</span>
+        <span aria-hidden="true" style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.28)", letterSpacing: 2, textTransform: "uppercase" }}>Emplacement réservé aux partenaires</span>
       </div>
     </div>
   );
@@ -1147,8 +1147,8 @@ function Footer() {
           Instagram
         </a>
       </div>
-      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.30)", letterSpacing: 1 }}>
-        © 2026 Carmelo Zambelli · APRAM · <a href="https://www.ffkarate.fr" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 0.3s" }}>FFK</a>
+      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.45)", letterSpacing: 1 }}>
+        © 2026 Carmelo Zambelli · APRAM · <a href="https://www.ffkarate.fr" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(207,155,59,0.65)", textDecoration: "underline", textUnderlineOffset: 2, transition: "color 0.3s" }}>FFK</a>
       </div>
     </footer>
   );
