@@ -279,6 +279,21 @@ function HeroSection() {
             </svg>
             Instagram
           </a>
+          <a href="https://tiktok.com/@carmelooooo" target="_blank" rel="noopener noreferrer" className="cS" style={{ padding: "14px 32px", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", textDecoration: "none", fontFamily: "'Oswald',sans-serif", fontWeight: 500, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s", background: "transparent", display: "inline-flex", alignItems: "center", gap: 10 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.48a8.18 8.18 0 004.76 1.52V7.56a4.84 4.84 0 01-1-.87z" fill="#25F4EE"/>
+              <path d="M16.37 2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-1.69-.55 2.89 2.89 0 004.57-2.34V2h3.45z" fill="#FE2C55"/>
+              <path d="M19.59 7.56v3.44a8.18 8.18 0 01-4.76-1.52v6.82a6.34 6.34 0 01-6.34 6.34 6.3 6.3 0 01-3.65-1.16 6.34 6.34 0 005.34-6.25V1.56h3.45v.44a4.83 4.83 0 003.77 4.25c.32.13.64.22.97.28v1.03h.22z" fill="#FE2C55" opacity="0.5"/>
+            </svg>
+            TikTok
+          </a>
+          <a href="https://facebook.com/carmelo.zambelli" target="_blank" rel="noopener noreferrer" className="cS" style={{ padding: "14px 32px", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", textDecoration: "none", fontFamily: "'Oswald',sans-serif", fontWeight: 500, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s", background: "transparent", display: "inline-flex", alignItems: "center", gap: 10 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M24 12c0-6.627-5.373-12-12-12S0 5.373 0 12c0 5.99 4.388 10.954 10.125 11.854V15.47H7.078V12h3.047V9.356c0-3.007 1.792-4.668 4.533-4.668 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874V12h3.328l-.532 3.47h-2.796v8.385C19.612 22.954 24 17.99 24 12z" fill="#1877F2"/>
+              <path d="M16.671 15.47L17.203 12h-3.328V9.75c0-.949.465-1.874 1.956-1.874h1.513V4.923s-1.374-.235-2.686-.235c-2.741 0-4.533 1.661-4.533 4.668V12H7.078v3.47h3.047v8.385a12.09 12.09 0 003.75 0V15.47h2.796z" fill="#fff"/>
+            </svg>
+            Facebook
+          </a>
         </div>
 
         <div style={{ marginTop: 56, opacity: 0.25, animation: "scrollH 2s ease-in-out infinite" }}>
