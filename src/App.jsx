@@ -197,7 +197,7 @@ function HeroSection() {
       position: "relative", overflow: "hidden",
       background: "#06060a"
     }}>
-      <img src="/images/combat-cage.jpg" alt="" style={{
+      <img src="/images/combat-cage.jpg" alt="" onError={(e) => { e.target.style.opacity = 0.1; }} style={{
         position: "absolute", inset: 0, width: "100%", height: "120%",
         objectFit: "cover", objectPosition: "center 30%", opacity: 0.25,
         filter: "saturate(0.6)", transition: "opacity 1.5s",
@@ -410,6 +410,7 @@ function GallerySection() {
               alt={p.alt}
               loading="lazy"
               onClick={() => { setPaused(true); setLightbox(true); }}
+              onError={(e) => { e.target.style.opacity = 0.1; e.target.alt = "Photo non disponible"; }}
               style={{
                 position: "absolute", inset: 0, width: "100%", height: "100%",
                 objectFit: "cover", objectPosition: p.pos,
@@ -461,7 +462,7 @@ function GallerySection() {
               transition: "all 0.3s", position: "relative", overflow: "hidden",
               height: "clamp(50px, 12vw, 70px)", background: "#0a0a0a"
             }}>
-              <img src={p.src} alt={p.alt} loading="lazy" style={{
+              <img src={p.src} alt={p.alt} loading="lazy" onError={(e) => { e.target.style.opacity = 0.1; e.target.alt = "Photo non disponible"; }} style={{
                 width: "100%", height: "100%", objectFit: "cover", objectPosition: p.pos,
                 opacity: i === active ? 0.9 : 0.3, transition: "opacity 0.3s",
                 filter: i === active ? "none" : "grayscale(0.5)"
@@ -497,7 +498,7 @@ function Lightbox({ photos, active, onClose, onPrev, onNext }) {
       <button onClick={onClose} style={{ position: "absolute", top: 12, right: 16, background: "none", border: "1px solid rgba(207,155,59,0.3)", color: "#cf9b3b", width: 40, height: 40, fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>&#10005;</button>
       <button onClick={onPrev} style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 56, height: 56, cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>&#8249;</button>
       <button onClick={onNext} style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 56, height: 56, cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>&#8250;</button>
-      <img src={photos[active].src} alt={photos[active].alt} style={{ maxWidth: "90vw", maxHeight: "85vh", objectFit: "contain" }} />
+      <img src={photos[active].src} alt={photos[active].alt} onError={(e) => { e.target.style.opacity = 0.1; e.target.alt = "Photo non disponible"; }} style={{ maxWidth: "90vw", maxHeight: "85vh", objectFit: "contain" }} />
       <div style={{ position: "absolute", bottom: 24, left: 0, right: 0, textAlign: "center", fontFamily: "'Oswald',sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", letterSpacing: 3, textTransform: "uppercase" }}>{photos[active].desc}</div>
     </div>
   );
@@ -735,7 +736,7 @@ function CoachSection() {
                 border: "3px solid #cf9b3b",
                 boxShadow: "0 0 30px rgba(207,155,59,0.2), 0 6px 24px rgba(0,0,0,0.4)"
               }}>
-                <img src="/images/rollin-greg-mma.jpg" alt="Maître Philippe Rollin et Greg MMA" loading="lazy" style={{
+                <img src="/images/rollin-greg-mma.jpg" alt="Maître Philippe Rollin et Greg MMA" loading="lazy" onError={(e) => { e.target.style.opacity = 0.1; e.target.alt = "Photo non disponible"; }} style={{
                   width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%",
                   filter: "saturate(0.85)"
                 }} />
@@ -1164,7 +1165,7 @@ function FloatingBio() {
             border: "2px solid #cf9b3b", overflow: "hidden",
             boxShadow: "0 0 16px rgba(207,155,59,0.2)"
           }}>
-            <img src="/images/portrait-carmelo.png" alt="Carmelo Zambelli" style={{
+            <img src="/images/portrait-carmelo.png" alt="Carmelo Zambelli" onError={(e) => { e.target.style.opacity = 0.1; }} style={{
               width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%"
             }} />
           </div>
