@@ -698,7 +698,7 @@ function CoachSection() {
         opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)",
         transition: "all 1s cubic-bezier(0.16,1,0.3,1)"
       }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "start" }}>
+        <div className="coachGrid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "start" }}>
           {/* Colonne gauche : titre + bio */}
           <div>
             <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>L'Équipe</div>
@@ -1135,6 +1135,7 @@ function ScrollProgress() {
 /* ─── Floating Bio Card ─── */
 function FloatingBio() {
   const [visible, setVisible] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   useEffect(() => {
     const h = () => {
       const hero = document.getElementById("hero");
@@ -1143,87 +1144,156 @@ function FloatingBio() {
       const pastHero = hero.getBoundingClientRect().bottom < 0;
       const atContact = contact.getBoundingClientRect().top < window.innerHeight * 0.25;
       setVisible(pastHero && !atContact);
+      if (!pastHero || atContact) setMobileOpen(false);
     };
     window.addEventListener("scroll", h, { passive: true });
     return () => window.removeEventListener("scroll", h);
   }, []);
 
   return (
-    <div className="floatingBio" style={{
-      position: "fixed", right: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : 280}px)`,
-      zIndex: 950, width: 220, padding: "22px 18px",
-      background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
-      border: "1px solid rgba(207,155,59,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
-      transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s",
-      opacity: visible ? 1 : 0, pointerEvents: visible ? "auto" : "none"
+    <>
+      {/* Onglet mobile — petit avatar CZ sur le bord droit */}
+      <button className="mFloatTab" onClick={() => setMobileOpen(true)} style={{
+        position: "fixed", right: 0, top: "50%", transform: "translateY(-50%)",
+        zIndex: 951, display: "none",
+        background: "rgba(6,6,10,0.92)", backdropFilter: "blur(12px)",
+        border: "1px solid rgba(207,155,59,0.2)", borderRight: "none",
+        borderRadius: "10px 0 0 10px",
+        padding: "10px 7px", cursor: "pointer",
+        opacity: visible && !mobileOpen ? 1 : 0,
+        pointerEvents: visible && !mobileOpen ? "auto" : "none",
+        transition: "opacity 0.3s",
+        flexDirection: "column", alignItems: "center", gap: 6,
+        boxShadow: "-4px 0 20px rgba(0,0,0,0.5)"
+      }}>
+        <img src="/images/portrait-carmelo.png" alt="" style={{ width: 30, height: 30, borderRadius: "50%", border: "1.5px solid #cf9b3b", objectFit: "cover", objectPosition: "center 20%" }} />
+        <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 9, color: "#cf9b3b", letterSpacing: 2, writingMode: "vertical-lr" }}>BIO</span>
+      </button>
+
+      {/* Carte flottante */}
+      <div className={`floatingBio${mobileOpen ? " mOpen" : ""}`} style={{
+        position: "fixed", right: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : 280}px)`,
+        zIndex: 950, width: 220, padding: "22px 18px",
+        background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+        border: "1px solid rgba(207,155,59,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
+        transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s",
+        opacity: visible ? 1 : 0, pointerEvents: visible ? "auto" : "none"
+      }}>
+        {/* Bouton fermer mobile */}
+        <button className="mFloatClose" onClick={() => setMobileOpen(false)} style={{
+          display: "none", position: "absolute", top: 8, right: 8,
+          background: "none", border: "none", color: "rgba(255,255,255,0.5)",
+          fontSize: 18, cursor: "pointer", lineHeight: 1, padding: 4, zIndex: 2
+        }}>&#10005;</button>
+
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #cf9b3b, #e8b84a, #cf9b3b)" }} />
+
+        <div style={{ textAlign: "center", marginBottom: 14 }}>
+          <div style={{ position: "relative", width: 56, height: 56, margin: "0 auto 10px" }}>
+            <div style={{
+              width: 56, height: 56, borderRadius: "50%",
+              border: "2px solid #cf9b3b", overflow: "hidden",
+              boxShadow: "0 0 16px rgba(207,155,59,0.2)"
+            }}>
+              <img src="/images/portrait-carmelo.png" alt="Carmelo Zambelli" onError={(e) => { e.target.style.opacity = 0.1; }} style={{
+                width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%"
+              }} />
+            </div>
+            <div style={{
+              position: "absolute", bottom: -2, right: -2,
+              width: 20, height: 14, borderRadius: 3,
+              overflow: "hidden", border: "1.5px solid rgba(255,255,255,0.15)",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.4)",
+              display: "flex"
+            }}>
+              <div style={{ flex: 1, background: "#002395" }} />
+              <div style={{ flex: 1, background: "#fff" }} />
+              <div style={{ flex: 1, background: "#ED2939" }} />
+            </div>
+          </div>
+          <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 15, color: "#fff", letterSpacing: 3, fontWeight: 700 }}>
+            CARMELO <span style={{ color: "#cf9b3b" }}>ZAMBELLI</span>
+          </div>
+          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", letterSpacing: 2, fontFamily: "'Inter',sans-serif", marginTop: 4 }}>-70KG · KARATÉ MIX FFK</div>
+        </div>
+
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 12 }}>
+          <p style={{
+            fontFamily: "'Inter',sans-serif", fontSize: 11, lineHeight: 1.7,
+            color: "rgba(255,255,255,0.85)", margin: 0
+          }}>
+            Passionné d'arts martiaux depuis l'enfance, Carmelo Zambelli est un jeune talent du Karaté Mix. Champion de France à 18 ans, il poursuit son ascension sur le circuit européen.
+          </p>
+        </div>
+
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 14 }}>
+          <p style={{
+            fontFamily: "'Inter',sans-serif", fontSize: 10, lineHeight: 1.7,
+            color: "rgba(255,255,255,0.75)", margin: 0
+          }}>
+            Pour franchir une nouvelle étape, il recherche des partenaires prêts à soutenir un athlète ambitieux et à forte visibilité.
+          </p>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 10 }}>
+          {[
+            { n: "18", l: "Wins" }, { n: "14", l: "Sub" }, { n: "86%", l: "Rate" },
+          ].map((s, i) => (
+            <div key={i} style={{ textAlign: "center" }}>
+              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, color: "#cf9b3b", fontWeight: 700, lineHeight: 1 }}>{s.n}</div>
+              <div style={{ fontSize: 7, letterSpacing: 2, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 3 }}>{s.l}</div>
+            </div>
+          ))}
+        </div>
+
+        <a href="#sponsors" onClick={() => setMobileOpen(false)} className="cP" style={{
+          display: "block", textAlign: "center", padding: "10px 0",
+          background: "linear-gradient(135deg, #cf9b3b, #a67c2e)",
+          color: "#06060a", textDecoration: "none", fontFamily: "'Oswald',sans-serif",
+          fontSize: 10, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700,
+          boxShadow: "0 4px 20px rgba(207,155,59,0.2)", transition: "all 0.3s"
+        }}>Devenir Partenaire</a>
+      </div>
+    </>
+  );
+}
+
+/* ─── Add to Favorites Banner ─── */
+function FavoriteBanner() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("favDismissed");
+    if (!dismissed) {
+      const t = setTimeout(() => setShow(true), 2500);
+      return () => clearTimeout(t);
+    }
+  }, []);
+  const dismiss = () => { setShow(false); sessionStorage.setItem("favDismissed", "1"); };
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isAndroid = /android/i.test(navigator.userAgent);
+  const msg = isIos
+    ? "Appuyez sur \u{E2}\u{9C}\u{89} puis « Sur l\u2019\u00E9cran d\u2019accueil »"
+    : isAndroid
+    ? "Appuyez sur \u22EE puis « Ajouter \u00E0 l\u2019\u00E9cran d\u2019accueil »"
+    : "Ctrl+D pour ajouter en favori";
+  if (!show) return null;
+  return (
+    <div style={{
+      position: "fixed", bottom: 84, left: "50%", transform: "translateX(-50%)",
+      zIndex: 1100, background: "rgba(10,8,6,0.95)", backdropFilter: "blur(16px)",
+      border: "1px solid rgba(207,155,59,0.25)", padding: "14px 20px",
+      display: "flex", alignItems: "center", gap: 14, maxWidth: "calc(100vw - 32px)",
+      boxShadow: "0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(207,155,59,0.08)"
     }}>
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #cf9b3b, #e8b84a, #cf9b3b)" }} />
-
-      <div style={{ textAlign: "center", marginBottom: 14 }}>
-        <div style={{ position: "relative", width: 56, height: 56, margin: "0 auto 10px" }}>
-          <div style={{
-            width: 56, height: 56, borderRadius: "50%",
-            border: "2px solid #cf9b3b", overflow: "hidden",
-            boxShadow: "0 0 16px rgba(207,155,59,0.2)"
-          }}>
-            <img src="/images/portrait-carmelo.png" alt="Carmelo Zambelli" onError={(e) => { e.target.style.opacity = 0.1; }} style={{
-              width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%"
-            }} />
-          </div>
-          <div style={{
-            position: "absolute", bottom: -2, right: -2,
-            width: 20, height: 14, borderRadius: 3,
-            overflow: "hidden", border: "1.5px solid rgba(255,255,255,0.15)",
-            boxShadow: "0 1px 4px rgba(0,0,0,0.4)",
-            display: "flex"
-          }}>
-            <div style={{ flex: 1, background: "#002395" }} />
-            <div style={{ flex: 1, background: "#fff" }} />
-            <div style={{ flex: 1, background: "#ED2939" }} />
-          </div>
-        </div>
-        <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 15, color: "#fff", letterSpacing: 3, fontWeight: 700 }}>
-          CARMELO <span style={{ color: "#cf9b3b" }}>ZAMBELLI</span>
-        </div>
-        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", letterSpacing: 2, fontFamily: "'Inter',sans-serif", marginTop: 4 }}>-70KG · KARATÉ MIX FFK</div>
+      <span style={{ fontSize: 22, lineHeight: 1 }}>&#9733;</span>
+      <div>
+        <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 13, color: "#cf9b3b", letterSpacing: 3, textTransform: "uppercase", marginBottom: 3 }}>Ajouter en favori</div>
+        <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.55)", lineHeight: 1.4 }}>{msg}</div>
       </div>
-
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 12 }}>
-        <p style={{
-          fontFamily: "'Inter',sans-serif", fontSize: 11, lineHeight: 1.7,
-          color: "rgba(255,255,255,0.85)", margin: 0
-        }}>
-          Passionné d'arts martiaux depuis l'enfance, Carmelo Zambelli est un jeune talent du Karaté Mix. Champion de France à 18 ans, il poursuit son ascension sur le circuit européen.
-        </p>
-      </div>
-
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 14 }}>
-        <p style={{
-          fontFamily: "'Inter',sans-serif", fontSize: 10, lineHeight: 1.7,
-          color: "rgba(255,255,255,0.75)", margin: 0
-        }}>
-          Pour franchir une nouvelle étape, il recherche des partenaires prêts à soutenir un athlète ambitieux et à forte visibilité.
-        </p>
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 10 }}>
-        {[
-          { n: "18", l: "Wins" }, { n: "14", l: "Sub" }, { n: "86%", l: "Rate" },
-        ].map((s, i) => (
-          <div key={i} style={{ textAlign: "center" }}>
-            <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, color: "#cf9b3b", fontWeight: 700, lineHeight: 1 }}>{s.n}</div>
-            <div style={{ fontSize: 7, letterSpacing: 2, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 3 }}>{s.l}</div>
-          </div>
-        ))}
-      </div>
-
-      <a href="#sponsors" className="cP" style={{
-        display: "block", textAlign: "center", padding: "10px 0",
-        background: "linear-gradient(135deg, #cf9b3b, #a67c2e)",
-        color: "#06060a", textDecoration: "none", fontFamily: "'Oswald',sans-serif",
-        fontSize: 10, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700,
-        boxShadow: "0 4px 20px rgba(207,155,59,0.2)", transition: "all 0.3s"
-      }}>Devenir Partenaire</a>
+      <button onClick={dismiss} style={{
+        background: "none", border: "none", color: "rgba(255,255,255,0.4)",
+        fontSize: 18, cursor: "pointer", padding: "0 0 0 8px", lineHeight: 1
+      }}>&#10005;</button>
     </div>
   );
 }
@@ -1281,7 +1351,7 @@ export default function App() {
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
-        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{display:none!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}}
+        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
         @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
       <ScrollProgress />
@@ -1298,6 +1368,7 @@ export default function App() {
       <Footer />
       <FloatingBio />
       <ScrollToTop />
+      <FavoriteBanner />
     </div>
   );
 }
