@@ -1159,27 +1159,27 @@ function FloatingSpotify() {
 
   return (
     <>
-      {/* Onglet mobile gauche */}
+      {/* Onglet mobile droite — sous le tab Bio */}
       <button className="mSpotifyTab" onClick={() => setMobileOpen(true)} style={{
-        position: "fixed", left: 0, top: "50%", transform: "translateY(-50%)",
+        position: "fixed", right: 0, top: "calc(50% + 52px)",
         zIndex: 951, display: "none",
         background: "rgba(6,6,10,0.92)", backdropFilter: "blur(12px)",
-        border: "1px solid rgba(30,215,96,0.25)", borderLeft: "none",
-        borderRadius: "0 10px 10px 0",
+        border: "1px solid rgba(30,215,96,0.25)", borderRight: "none",
+        borderRadius: "10px 0 0 10px",
         padding: "10px 7px", cursor: "pointer",
         opacity: visible && !mobileOpen ? 1 : 0,
         pointerEvents: visible && !mobileOpen ? "auto" : "none",
         transition: "opacity 0.3s",
         flexDirection: "column", alignItems: "center", gap: 6,
-        boxShadow: "4px 0 20px rgba(0,0,0,0.5)"
+        boxShadow: "-4px 0 20px rgba(0,0,0,0.5)"
       }}>
         <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" fill="#1DB954"/></svg>
         <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 8, color: "#1DB954", letterSpacing: 1, writingMode: "vertical-lr" }}>MIX</span>
       </button>
 
-      {/* Carte flottante gauche */}
+      {/* Carte flottante droite */}
       <div className={`floatingSpotify${mobileOpen ? " mSpOpen" : ""}`} style={{
-        position: "fixed", left: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : -280}px)`,
+        position: "fixed", right: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : 280}px)`,
         zIndex: 950, width: 220, padding: "22px 18px",
         background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
         border: "1px solid rgba(30,215,96,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
@@ -1474,8 +1474,8 @@ export default function App() {
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
-        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.floatingSpotify{transform:translateY(-50%) translateX(-280px)!important;opacity:0!important;pointer-events:none!important}.floatingSpotify.mSpOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;left:12px!important;width:200px!important;padding:18px 14px!important}.mSpotifyTab{display:flex!important}.mSpotifyClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
-        @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}.floatingSpotify{left:8px!important;width:190px!important;padding:18px 14px!important}}
+        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.floatingSpotify{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingSpotify.mSpOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mSpotifyTab{display:flex!important}.mSpotifyClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
+        @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}.floatingSpotify{right:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
       <ScrollProgress />
       <Navbar activeSection={active} />
