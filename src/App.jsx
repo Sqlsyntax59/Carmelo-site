@@ -425,7 +425,7 @@ function GallerySection() {
               flex: 1, padding: 0, cursor: "pointer", border: "none",
               borderBottom: i === active ? "2px solid #cf9b3b" : "2px solid transparent",
               transition: "all 0.3s", position: "relative", overflow: "hidden",
-              height: 70, background: "#0a0a0a"
+              height: "clamp(50px, 12vw, 70px)", background: "#0a0a0a"
             }}>
               <img src={p.src} alt={p.alt} loading="lazy" style={{
                 width: "100%", height: "100%", objectFit: "cover", objectPosition: p.pos,
@@ -730,7 +730,7 @@ function KarateMixSection() {
           Discipline officielle de la Fédération Française de Karaté (FFK), le Karaté Mix combine les techniques de frappe du karaté traditionnel avec le combat au sol issu du jujitsu et du grappling. Pieds, poings, projections et soumissions : un sport complet encadré par une fédération olympique.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 180px)", gap: 2, justifyContent: "center" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 2, justifyContent: "center" }}>
           {[
             { img: "/images/icon-frappe.png", title: "Frappe debout", desc: "Poings, pieds, genoux issus du karaté et du kickboxing" },
             { img: "/images/icon-projection.png", title: "Projections", desc: "Amenées au sol héritées du judo et du jujitsu" },
@@ -749,7 +749,7 @@ function KarateMixSection() {
         </div>
 
         {/* Vidéo YouTube FFK */}
-        <div style={{ marginTop: 48, marginBottom: 40, maxWidth: "50%", margin: "48px auto 40px" }}>
+        <div style={{ marginTop: 48, marginBottom: 40, maxWidth: "min(100%, 560px)", margin: "48px auto 40px" }}>
           <div style={{ fontSize: 10, letterSpacing: 5, color: "#cf9b3b", marginBottom: 16, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>En action</div>
           <div style={{
             position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden",
@@ -881,7 +881,7 @@ function SponsorsSection() {
           Choisissez vos emplacements de visibilité — du kimono aux gants, affichez votre logo là où il compte.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
+        <div className="sponsorGrid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
           {tiers.map((t, i) => (
             <div key={i} className="sponsorCard" style={{ padding: "28px 16px 24px", background: "rgba(255,255,255,0.012)", border: t.accent ? "1px solid rgba(207,155,59,0.18)" : "1px solid rgba(255,255,255,0.03)", position: "relative", overflow: "hidden", textAlign: "center", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
               {t.accent && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#cf9b3b,#e8b84a,#cf9b3b)" }} />}
@@ -1217,7 +1217,7 @@ export default function App() {
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
-        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{display:none!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}}
+        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{display:none!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}}
         @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
       <ScrollProgress />
