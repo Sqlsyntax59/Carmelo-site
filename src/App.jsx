@@ -8,13 +8,17 @@ const FIGHTER = {
   title: "Champion de France Karaté Mix",
   club: "Académie Philippe Rollin Arts Martiaux",
   record: { total: 21, wins: 18, losses: 3, ko: 1, sub: 14, dec: 3 },
-  bio: "Originaire d'Orléans, Carmelo découvre le Karaté Mix en 2023 à l'Académie Philippe Rollin. En moins de trois ans, il enchaîne 21 combats, décroche deux titres de Champion de France et une Coupe de France — le tout à seulement 18 ans. Spécialiste du combat au sol avec 14 victoires par soumission, il impose un style technique et suffocant qui ne laisse aucun répit à ses adversaires. Son objectif : passer professionnel et porter les couleurs de la France sur la scène européenne.",
+  bio: [
+    "Originaire d'Orléans, Carmelo Zambelli découvre le Karaté Mix en 2023 à l'Académie Philippe Rollin. En moins de trois ans, il dispute déjà 21 combats et s'impose parmi les meilleurs de sa génération, avec deux titres de Champion de France et une Coupe de France, à seulement 18 ans.",
+    "Spécialiste du combat au sol, il affiche un style technique et exigeant, concrétisé par 14 victoires par soumission. Un profil complet, discipliné, et résolument tourné vers la performance.",
+    "Aujourd'hui, Carmelo entre dans une nouvelle étape : passer professionnel et représenter la France sur la scène européenne. Il recherche des partenaires prêts à accompagner un jeune athlète ambitieux, porté par des valeurs fortes : travail, engagement et dépassement de soi."
+  ],
   palmares: [
-    { year: "2026", event: "Championnat de France Karaté Mix FFK", result: "🥇 Champion de France", highlight: true },
-    { year: "2025", event: "Championnat de France Karaté Mix FFK", result: "🥇 Champion de France", highlight: true },
-    { year: "2025", event: "Coupe de France Karaté Mix FFK", result: "🥇 Vainqueur (750+ combattants)", highlight: true },
-    { year: "2025", event: "Open de France Karaté Mix", result: "🥈 Finaliste", highlight: false },
-    { year: "2024", event: "Championnat de France Karaté Mix FFK", result: "🥉 3ème", highlight: false },
+    { year: "2026", event: "Championnat de France Karaté Mix FFK", result: "🥇 1ᵉʳ — Champion de France", highlight: true },
+    { year: "2025", event: "Championnat de France Karaté Mix FFK", result: "🥇 1ᵉʳ — Champion de France", highlight: true },
+    { year: "2025", event: "Coupe de France Karaté Mix FFK", result: "🥇 1ᵉʳ — Vainqueur (750+ combattants)", highlight: true },
+    { year: "2025", event: "Open de France Karaté Mix", result: "🥈 2ᵉ — Finaliste", highlight: false },
+    { year: "2024", event: "Championnat de France Karaté Mix FFK", result: "🥉 3ᵉ", highlight: false },
   ],
   social: { instagram: "https://instagram.com/carmelooooo" },
 };
@@ -88,40 +92,43 @@ function Navbar({ activeSection }) {
   const links = [
     { id: "hero", label: "Accueil" }, { id: "discipline", label: "Discipline" },
     { id: "about", label: "Parcours" }, { id: "gallery", label: "Galerie" },
-    { id: "palmares", label: "Palmarès" }, { id: "team", label: "L'Équipe" },
-    { id: "sponsors", label: "Sponsors" }, { id: "contact", label: "Contact" },
+    { id: "palmares", label: "Palmarès" }, { id: "events", label: "Événements" },
+    { id: "team", label: "L'Équipe" }, { id: "sponsors", label: "Sponsors" },
+    { id: "contact", label: "Contact" },
   ];
   useEffect(() => { const h = () => setScrolled(window.scrollY > 50); window.addEventListener("scroll", h, { passive: true }); return () => window.removeEventListener("scroll", h); }, []);
   return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-      background: scrolled ? "rgba(6,6,10,0.94)" : "rgba(6,6,10,0.3)",
-      backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
-      borderBottom: scrolled ? "1px solid rgba(207,155,59,0.1)" : "1px solid transparent",
-      padding: "0 clamp(16px,4vw,40px)", height: 60,
-      display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s"
-    }}>
-      <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, fontWeight: 700, letterSpacing: 4, color: "#fff" }}>
-        C<span style={{ color: "#cf9b3b" }}>Z</span>
-      </div>
-      <div className="navD" style={{ display: "flex", gap: 22, alignItems: "center" }}>
-        {links.map(l => (
-          <a key={l.id} href={`#${l.id}`} style={{
-            color: activeSection === l.id ? "#cf9b3b" : "rgba(255,255,255,0.45)",
-            textDecoration: "none", fontSize: 11, fontFamily: "'Inter',sans-serif",
-            letterSpacing: 2.5, textTransform: "uppercase", fontWeight: 600, transition: "color 0.3s",
-            borderBottom: activeSection === l.id ? "1.5px solid #cf9b3b" : "1.5px solid transparent", paddingBottom: 3
-          }}>{l.label}</a>
-        ))}
-      </div>
-      <button onClick={() => setOpen(!open)} className="mBtn" style={{
-        display: "none", background: "none", border: "none", color: "#cf9b3b", fontSize: 24, cursor: "pointer"
-      }}>{open ? "✕" : "☰"}</button>
+    <>
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
+        background: scrolled || open ? "rgba(6,6,10,0.94)" : "rgba(6,6,10,0.3)",
+        backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)",
+        borderBottom: scrolled ? "1px solid rgba(207,155,59,0.1)" : "1px solid transparent",
+        padding: "0 clamp(16px,4vw,40px)", height: 60,
+        display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s"
+      }}>
+        <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, fontWeight: 700, letterSpacing: 4, color: "#fff", zIndex: 1002 }}>
+          C<span style={{ color: "#cf9b3b" }}>Z</span>
+        </div>
+        <div className="navD" style={{ display: "flex", gap: 22, alignItems: "center" }}>
+          {links.map(l => (
+            <a key={l.id} href={`#${l.id}`} style={{
+              color: activeSection === l.id ? "#cf9b3b" : "rgba(255,255,255,0.45)",
+              textDecoration: "none", fontSize: 11, fontFamily: "'Inter',sans-serif",
+              letterSpacing: 2.5, textTransform: "uppercase", fontWeight: 600, transition: "color 0.3s",
+              borderBottom: activeSection === l.id ? "1.5px solid #cf9b3b" : "1.5px solid transparent", paddingBottom: 3
+            }}>{l.label}</a>
+          ))}
+        </div>
+        <button onClick={() => setOpen(!open)} className="mBtn" style={{
+          display: "none", background: "none", border: "none", color: "#cf9b3b", fontSize: 24, cursor: "pointer", zIndex: 1002, position: "relative"
+        }}>{open ? "✕" : "☰"}</button>
+      </nav>
       {open && (
         <div style={{
-          position: "fixed", top: 60, left: 0, right: 0, bottom: 0,
-          background: "rgba(6,6,10,0.98)", display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center", gap: 28, zIndex: 999
+          position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          background: "#06060a", display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center", gap: 28, zIndex: 1001
         }}>
           {links.map(l => (
             <a key={l.id} href={`#${l.id}`} onClick={() => setOpen(false)} style={{
@@ -131,7 +138,7 @@ function Navbar({ activeSection }) {
           ))}
         </div>
       )}
-    </nav>
+    </>
   );
 }
 
@@ -244,11 +251,23 @@ function AboutSection() {
   return (
     <section id="about" ref={ref} style={{ padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)", background: "linear-gradient(180deg, #0a0a10 0%, #08080e 100%)", borderTop: "1px solid rgba(207,155,59,0.08)" }}>
       <div style={{ maxWidth: 960, margin: "0 auto", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Parcours</div>
+        <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Parcours</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 36px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
-          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>
+          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>{" "}<span style={{ display: "inline-flex", width: 42, height: 28, borderRadius: 4, overflow: "hidden", verticalAlign: "middle", marginLeft: 12, border: "2px solid rgba(255,255,255,0.15)", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}><span style={{ flex: 1, background: "#002395" }} /><span style={{ flex: 1, background: "#fff" }} /><span style={{ flex: 1, background: "#ED2939" }} /></span><br /><span className="fireLine" style={{
+            fontSize: "clamp(20px,3.5vw,40px)",
+            background: "linear-gradient(90deg, rgba(255,255,255,0.15) 0%, #cf9b3b 15%, #e8b84a 25%, #ff6b2b 40%, #cf9b3b 55%, rgba(255,255,255,0.15) 70%)",
+            backgroundSize: "300% 100%",
+            backgroundClip: "text", WebkitBackgroundClip: "text", color: "transparent",
+            animation: "fireSweep 3s ease-in-out infinite",
+            display: "inline-block",
+            filter: "drop-shadow(0 0 12px rgba(207,155,59,0.4))"
+          }}>Une trajectoire fulgurante<span style={{ color: "#cf9b3b" }}>.</span></span>
         </h2>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, lineHeight: 2, color: "rgba(255,255,255,0.48)", maxWidth: 620 }}>{FIGHTER.bio}</p>
+        <div style={{ maxWidth: 620 }}>
+          {FIGHTER.bio.map((p, i) => (
+            <p key={i} style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: i === 2 ? "rgba(207,155,59,0.55)" : "rgba(255,255,255,0.45)", margin: "0 0 20px" }}>{p}</p>
+          ))}
+        </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 1, marginTop: 48, background: "rgba(207,155,59,0.1)" }}>
           {[
@@ -322,7 +341,7 @@ function GallerySection() {
         opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)",
         transition: "all 1s cubic-bezier(0.16,1,0.3,1)"
       }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Galerie</div>
+        <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Galerie</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 48px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           En action<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
@@ -414,32 +433,63 @@ function PalmaresSection() {
   return (
     <section id="palmares" ref={ref} style={{ padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)", background: "linear-gradient(180deg, #08080e 0%, #0a0a10 100%)", borderTop: "1px solid rgba(207,155,59,0.08)" }}>
       <div style={{ maxWidth: 960, margin: "0 auto", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Résultats</div>
+        <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Résultats</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 48px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Palmarès<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          {FIGHTER.palmares.map((p, i) => (
-            <div key={i} style={{
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-              padding: "24px 24px", background: p.highlight ? "rgba(207,155,59,0.04)" : "rgba(255,255,255,0.012)",
-              borderLeft: p.highlight ? "3px solid #cf9b3b" : "3px solid rgba(255,255,255,0.05)",
-              transition: "all 0.3s", flexWrap: "wrap", gap: 10,
-              opacity: v ? 1 : 0, transform: v ? "translateX(0)" : "translateX(-20px)",
-              transitionDelay: `${0.15 + i * 0.08}s`
-            }}>
-              <div>
-                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 11, letterSpacing: 5, color: "rgba(255,255,255,0.22)", marginBottom: 5, fontWeight: 500 }}>{p.year}</div>
-                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, color: "#fff", fontWeight: 500 }}>{p.event}</div>
+        {/* Timeline verticale */}
+        <div style={{ position: "relative", paddingLeft: 40 }}>
+          {/* Ligne verticale dorée */}
+          <div style={{ position: "absolute", left: 15, top: 8, bottom: 8, width: 2, background: "linear-gradient(180deg, #cf9b3b 0%, rgba(207,155,59,0.15) 100%)" }} />
+          {FIGHTER.palmares.map((p, i) => {
+            const medal = p.result.includes("🥇") ? "#cf9b3b" : p.result.includes("🥈") ? "#c0c0c0" : "#cd7f32";
+            const resultText = p.result.replace(/🥇|🥈|🥉/g, "").trim();
+            return (
+              <div key={i} style={{
+                position: "relative", marginBottom: i < FIGHTER.palmares.length - 1 ? 6 : 0,
+                opacity: v ? 1 : 0, transform: v ? "translateX(0)" : "translateX(-30px)",
+                transition: `all 0.6s cubic-bezier(0.16,1,0.3,1)`, transitionDelay: `${0.15 + i * 0.1}s`
+              }}>
+                {/* Nœud médaille */}
+                <div style={{
+                  position: "absolute", left: -40, top: 24, width: 32, height: 32,
+                  borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+                  background: `radial-gradient(circle at 35% 35%, ${medal}, ${medal}88)`,
+                  boxShadow: p.highlight ? `0 0 20px ${medal}44, 0 0 40px ${medal}22` : "none",
+                  border: `2px solid ${medal}`, zIndex: 2
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#06060a"><path d="M5 3h14v2a7 7 0 01-14 0V3z"/><path d="M12 12v3" stroke="#06060a" strokeWidth="1.5"/><path d="M8 18h8v1H8z"/><path d="M9 15h6a1 1 0 011 1v2H8v-2a1 1 0 011-1z"/></svg>
+                </div>
+                {/* Carte résultat */}
+                <div style={{
+                  padding: "22px 28px", background: p.highlight ? "rgba(207,155,59,0.05)" : "rgba(255,255,255,0.015)",
+                  border: `1px solid ${p.highlight ? "rgba(207,155,59,0.15)" : "rgba(255,255,255,0.04)"}`,
+                  borderRadius: 4, transition: "all 0.3s"
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+                    <div>
+                      <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 28, color: medal, fontWeight: 700, lineHeight: 1, marginBottom: 4 }}>{p.year}</div>
+                      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, color: "#fff", fontWeight: 500 }}>{p.event}</div>
+                    </div>
+                    <div style={{
+                      padding: "8px 18px", background: `${medal}12`, border: `1px solid ${medal}33`,
+                      fontFamily: "'Oswald',sans-serif", fontSize: 12, color: medal, fontWeight: 600,
+                      letterSpacing: 2, textTransform: "uppercase", borderRadius: 2,
+                      display: "inline-flex", alignItems: "center", gap: 8
+                    }}>
+                      {p.highlight && <span style={{ display: "inline-flex", width: 18, height: 12, borderRadius: 2, overflow: "hidden", flexShrink: 0, border: "1px solid rgba(255,255,255,0.1)" }}><span style={{ flex: 1, background: "#002395" }} /><span style={{ flex: 1, background: "#fff" }} /><span style={{ flex: 1, background: "#ED2939" }} /></span>}
+                      {resultText}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 13, color: p.highlight ? "#cf9b3b" : "rgba(255,255,255,0.45)", fontWeight: 600, letterSpacing: 1 }}>{p.result}</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Et ensuite — Ambition fusionnée */}
         <div style={{ marginTop: 64, borderTop: "1px solid rgba(207,155,59,0.08)", paddingTop: 48 }}>
-          <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Et ensuite</div>
+          <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Et ensuite</div>
           <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(22px,4vw,36px)", color: "#fff", lineHeight: 1.1, margin: "0 0 16px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
             L'objectif est clair<span style={{ color: "#cf9b3b" }}>.</span>
           </h3>
@@ -478,6 +528,80 @@ function PalmaresSection() {
   );
 }
 
+/* ─── Événements FFK ─── */
+const FFK_EVENTS = [
+  { date: "11 Avr 2026", name: "Open de France Karaté Mix Light", location: "À confirmer", url: "https://www.ffkarate.fr/calendrier/open-de-france-karate-mix-individuels/", status: "inscriptions" },
+  { date: "12 Avr 2026", name: "Open de France Karaté Mix & Mix Élite", location: "À confirmer", url: "https://www.ffkarate.fr/calendrier/open-de-france-karate-mix-et-mix-elite/", status: "inscriptions" },
+];
+
+function EventsSection() {
+  const [ref, v] = useReveal();
+  return (
+    <section id="events" ref={ref} style={{
+      padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)",
+      background: "linear-gradient(180deg, #08080e 0%, #0a0806 100%)",
+      borderTop: "1px solid rgba(207,155,59,0.08)", position: "relative"
+    }}>
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 40% at 50% 0%, rgba(207,155,59,0.025) 0%, transparent 70%)" }} />
+      <div style={{
+        maxWidth: 960, margin: "0 auto", position: "relative",
+        opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)",
+        transition: "all 1s cubic-bezier(0.16,1,0.3,1)"
+      }}>
+        <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Calendrier</div>
+        <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
+          Prochains événements<span style={{ color: "#cf9b3b" }}>.</span>
+        </h2>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.9, color: "rgba(255,255,255,0.38)", maxWidth: 560, marginBottom: 44 }}>
+          Compétitions officielles Karaté Mix sous l'égide de la Fédération Française de Karaté.
+        </p>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {FFK_EVENTS.map((e, i) => (
+            <a key={i} href={e.url} target="_blank" rel="noopener noreferrer" className="sponsorCard eventCard" style={{
+              display: "grid", gridTemplateColumns: "auto 1fr auto", gap: "clamp(16px,3vw,32px)", alignItems: "center",
+              padding: "24px clamp(16px,3vw,28px)", background: "rgba(255,255,255,0.012)",
+              border: "1px solid rgba(207,155,59,0.08)", textDecoration: "none",
+              transition: "all 0.3s", cursor: "pointer",
+              opacity: v ? 1 : 0, transitionDelay: `${0.2 + i * 0.12}s`
+            }}>
+              <div style={{ textAlign: "center", minWidth: 70 }}>
+                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, color: "#cf9b3b", fontWeight: 700, lineHeight: 1 }}>{e.date.split(" ")[0]}</div>
+                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, letterSpacing: 2, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", marginTop: 4 }}>{e.date.split(" ").slice(1).join(" ")}</div>
+              </div>
+              <div>
+                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "#fff", fontWeight: 600, letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>{e.name}</div>
+                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)" }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ verticalAlign: "middle", marginRight: 4, marginTop: -2 }}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5"/><circle cx="12" cy="9" r="2.5" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5"/></svg>
+                  {e.location}
+                </div>
+              </div>
+              <div style={{
+                padding: "6px 14px", fontSize: 9, letterSpacing: 3,
+                fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase",
+                color: "#cf9b3b", border: "1px solid rgba(207,155,59,0.2)", background: "rgba(207,155,59,0.06)"
+              }}>{e.status}</div>
+            </a>
+          ))}
+        </div>
+
+        <div style={{ marginTop: 32, display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+          <a href="https://www.ffkarate.fr/calendrier?cat_id%5B%5D=243" target="_blank" rel="noopener noreferrer" className="cS" style={{
+            padding: "12px 28px", border: "1px solid rgba(207,155,59,0.2)", color: "#cf9b3b",
+            textDecoration: "none", fontFamily: "'Oswald',sans-serif", fontWeight: 600,
+            fontSize: 11, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s",
+            background: "rgba(207,155,59,0.04)", display: "inline-flex", alignItems: "center", gap: 8
+          }}>
+            <img src="/images/logo-ffk.svg" alt="FFK" style={{ height: 16, filter: "brightness(1.2)" }} />
+            Calendrier complet FFK
+            <span style={{ fontSize: 14 }}>&#8599;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Coach ─── */
 function CoachSection() {
   const [ref, v] = useReveal();
@@ -493,22 +617,13 @@ function CoachSection() {
         opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)",
         transition: "all 1s cubic-bezier(0.16,1,0.3,1)"
       }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>L'Équipe</div>
-        <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 48px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
-          Maître Philippe<br />Rollin<span style={{ color: "#cf9b3b" }}>.</span>
-        </h2>
-
-        {/* Image APRAM */}
-        <div style={{ marginBottom: 40, overflow: "hidden", border: "1px solid rgba(207,155,59,0.08)" }}>
-          <img src="/images/stage-apram.jpg" alt="Stage MMA APRAM — Philippe Rollin" loading="lazy" style={{
-            width: "100%", maxHeight: 320, objectFit: "cover", objectPosition: "center 20%",
-            filter: "saturate(0.8)", transition: "transform 0.6s"
-          }} />
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 40 }}>
-          {/* Bio */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "start" }}>
+          {/* Colonne gauche : titre + bio */}
           <div>
+            <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>L'Équipe</div>
+            <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 48px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
+              Maître Philippe<br />Rollin<span style={{ color: "#cf9b3b" }}>.</span>
+            </h2>
             <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: "rgba(255,255,255,0.45)", margin: "0 0 32px" }}>
               {COACH.bio}
             </p>
@@ -527,11 +642,25 @@ function CoachSection() {
             </div>
           </div>
 
-          {/* Credentials */}
+          {/* Colonne droite : photo + qualifications — aligné en haut avec le titre */}
           <div style={{
             padding: "32px 28px", background: "rgba(207,155,59,0.03)",
             border: "1px solid rgba(207,155,59,0.08)"
           }}>
+            {/* Photo Philippe Rollin & Greg MMA — cercle doré centré */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 28 }}>
+              <div style={{
+                width: 200, height: 200,
+                borderRadius: "50%", overflow: "hidden",
+                border: "3px solid #cf9b3b",
+                boxShadow: "0 0 30px rgba(207,155,59,0.2), 0 6px 24px rgba(0,0,0,0.4)"
+              }}>
+                <img src="/images/rollin-greg-mma.jpg" alt="Maître Philippe Rollin et Greg MMA" loading="lazy" style={{
+                  width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%",
+                  filter: "saturate(0.85)"
+                }} />
+              </div>
+            </div>
             <div style={{
               fontFamily: "'Oswald',sans-serif", fontSize: 14, letterSpacing: 5,
               color: "#cf9b3b", marginBottom: 24, textTransform: "uppercase", fontWeight: 600
@@ -550,7 +679,7 @@ function CoachSection() {
               fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.4)",
               fontStyle: "italic", lineHeight: 1.6
             }}>
-              « Carmelo est le produit d'une école de combat complète — du judo au jujitsu, en passant par le karaté. 
+              « Carmelo est le produit d'une école de combat complète — du judo au jujitsu, en passant par le karaté.
               C'est cette polyvalence qui fait la différence dans la cage. »
             </div>
           </div>
@@ -575,7 +704,7 @@ function KarateMixSection() {
         opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)",
         transition: "all 1s cubic-bezier(0.16,1,0.3,1)"
       }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>La discipline</div>
+        <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>La discipline</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Le Karaté Mix<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
@@ -583,25 +712,45 @@ function KarateMixSection() {
           Discipline officielle de la Fédération Française de Karaté (FFK), le Karaté Mix combine les techniques de frappe du karaté traditionnel avec le combat au sol issu du jujitsu et du grappling. Pieds, poings, projections et soumissions : un sport complet encadré par une fédération olympique.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 2 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 180px)", gap: 2, justifyContent: "center" }}>
           {[
-            { svg: <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M18 8c0-1.1-.4-2.1-1-2.8L13.4 2c-.8-.7-2-.7-2.8 0L7 5.2C6.4 5.9 6 6.9 6 8c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4z" stroke="#cf9b3b" strokeWidth="1.5" strokeLinejoin="round"/><path d="M9 12l-2 4.5M15 12l2 4.5M12 12v7" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/><path d="M7 22h10" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: "Frappe debout", desc: "Poings, pieds, genoux issus du karaté et du kickboxing" },
-            { svg: <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="4" r="2" stroke="#cf9b3b" strokeWidth="1.5"/><circle cx="17" cy="6" r="2" stroke="#cf9b3b" strokeWidth="1.5"/><path d="M5 14l4-4 3 2 4-4" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M3 18c1-2 3-4 6-4s4 1 6 1 4-2 6-4" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/><path d="M7 22c2-2 4-3 5-3s3 1 5 3" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: "Projections", desc: "Amenées au sol héritées du judo et du jujitsu" },
-            { svg: <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="5" y="8" width="14" height="10" rx="3" stroke="#cf9b3b" strokeWidth="1.5"/><path d="M12 8V5" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/><circle cx="12" cy="3.5" r="1.5" stroke="#cf9b3b" strokeWidth="1.2"/><path d="M9.5 13h5M12 11v4" stroke="#cf9b3b" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: "Soumissions", desc: "Clés articulaires et étranglements au sol" },
+            { img: "/images/icon-frappe.png", title: "Frappe debout", desc: "Poings, pieds, genoux issus du karaté et du kickboxing" },
+            { img: "/images/icon-projection.png", title: "Projections", desc: "Amenées au sol héritées du judo et du jujitsu" },
+            { img: "/images/icon-soumission.png", title: "Soumissions", desc: "Clés articulaires et étranglements au sol" },
           ].map((item, i) => (
             <div key={i} style={{
-              padding: "28px 22px", background: "rgba(255,255,255,0.012)",
+              padding: "18px 14px", background: "rgba(255,255,255,0.012)",
               border: "1px solid rgba(207,155,59,0.06)", transition: "all 0.3s",
               opacity: v ? 1 : 0, transitionDelay: `${0.3 + i * 0.12}s`
             }}>
-              <div style={{ marginBottom: 14 }}>{item.svg}</div>
+              <div style={{ marginBottom: 10 }}><img src={item.img} alt={item.title} style={{ width: 150, height: 150, objectFit: "contain" }} /></div>
               <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "#fff", fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: "uppercase" }}>{item.title}</div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.7 }}>{item.desc}</div>
             </div>
           ))}
         </div>
 
-        <div style={{ marginTop: 40, display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+        {/* Vidéo YouTube FFK */}
+        <div style={{ marginTop: 48, marginBottom: 40, maxWidth: "50%", margin: "48px auto 40px" }}>
+          <div style={{ fontSize: 10, letterSpacing: 5, color: "#cf9b3b", marginBottom: 16, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>En action</div>
+          <div style={{
+            position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden",
+            border: "1px solid rgba(207,155,59,0.12)", background: "#000"
+          }}>
+            <iframe
+              src="https://www.youtube.com/embed/3d39S4qZYWc?start=13&rel=0&modestbranding=1&color=white"
+              title="Karaté Mix — Saison 2024/2025 (FFK)"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+            />
+          </div>
+          <div style={{ marginTop: 8, fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: 1 }}>
+            Source : Fédération Française de Karaté — Karaté Mix Saison 2024/2025
+          </div>
+        </div>
+
+        <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
           <a href="https://www.ffkarate.fr" target="_blank" rel="noopener noreferrer" className="cS" style={{
             padding: "12px 28px", border: "1px solid rgba(207,155,59,0.2)", color: "#cf9b3b",
             textDecoration: "none", fontFamily: "'Oswald',sans-serif", fontWeight: 600,
@@ -623,33 +772,120 @@ function KarateMixSection() {
 }
 
 /* ─── Sponsors ─── */
+function FighterDiagram({ zones = [], color, id }) {
+  const on = (z) => zones.includes(z);
+  const fill = (z) => on(z) ? `${color}20` : "rgba(255,255,255,0.012)";
+  const stk = (z) => on(z) ? `${color}88` : "rgba(255,255,255,0.05)";
+  const sw = (z) => on(z) ? 1.4 : 0.6;
+  const fId = `glow-${id}`;
+  const annotations = [
+    { id: "epaules", label: "Épaules", lx: 192, ly: 78, fx: 158, fy: 78 },
+    { id: "kimono", label: "Poitrine", lx: 192, ly: 125, fx: 138, fy: 125 },
+    { id: "gants", label: "Gants", lx: 192, ly: 160, fx: 176, fy: 157 },
+    { id: "genoux", label: "Genoux", lx: 192, ly: 248, fx: 134, fy: 248 },
+    { id: "tibias", label: "Tibias", lx: 192, ly: 293, fx: 136, fy: 293 },
+  ];
+  return (
+    <svg viewBox="0 0 270 370" style={{ width: "100%", maxWidth: 230, height: "auto", display: "block", margin: "0 auto" }}>
+      <defs>
+        <filter id={fId} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="4" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <clipPath id={`head-${id}`}><circle cx="100" cy="28" r="16" /></clipPath>
+      </defs>
+      {/* Head — portrait Carmelo */}
+      <image href="/images/portrait-carmelo.png" x="84" y="12" width="32" height="32" clipPath={`url(#head-${id})`} preserveAspectRatio="xMidYMid slice" />
+      <circle cx="100" cy="28" r="16" fill="none" stroke={`${color}66`} strokeWidth="1.2" />
+      {/* Neck */}
+      <rect x="94" y="44" width="12" height="10" rx="2" fill="rgba(255,255,255,0.02)" />
+      {/* Torso / Rashguard */}
+      <path d="M65,56 L135,56 L130,185 L70,185 Z" fill={fill("kimono")} stroke={stk("kimono")} strokeWidth={sw("kimono")} filter={on("kimono") ? `url(#${fId})` : undefined} />
+      {on("kimono") && <>
+        <rect x="82" y="108" width="36" height="22" rx="2" fill="none" stroke={`${color}44`} strokeWidth="0.7" strokeDasharray="2,2" />
+        <text x="100" y="123" textAnchor="middle" fill={`${color}77`} fontSize="6.5" fontFamily="Inter,sans-serif" fontWeight="600">VOTRE LOGO</text>
+      </>}
+      {/* Belt */}
+      <line x1="72" y1="158" x2="128" y2="158" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+      {/* Shoulders */}
+      <path d="M65,56 L42,72 L47,98 L70,80 Z" fill={fill("epaules")} stroke={stk("epaules")} strokeWidth={sw("epaules")} filter={on("epaules") ? `url(#${fId})` : undefined} />
+      <path d="M135,56 L158,72 L153,98 L130,80 Z" fill={fill("epaules")} stroke={stk("epaules")} strokeWidth={sw("epaules")} filter={on("epaules") ? `url(#${fId})` : undefined} />
+      {/* Arms */}
+      <path d="M42,72 L24,150 L38,155 L52,92" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.6" />
+      <path d="M158,72 L176,150 L162,155 L148,92" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.6" />
+      {/* Gloves */}
+      <ellipse cx="24" cy="157" rx="12" ry="10" fill={fill("gants")} stroke={stk("gants")} strokeWidth={sw("gants")} filter={on("gants") ? `url(#${fId})` : undefined} />
+      <ellipse cx="176" cy="157" rx="12" ry="10" fill={fill("gants")} stroke={stk("gants")} strokeWidth={sw("gants")} filter={on("gants") ? `url(#${fId})` : undefined} />
+      {/* Shorts */}
+      <path d="M72,185 L67,232 L95,232 L100,192 L105,232 L133,232 L128,185 Z" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.6" />
+      {/* Legs */}
+      <path d="M72,232 L66,340 L86,340 L92,232 Z" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.6" />
+      <path d="M108,232 L114,340 L134,340 L128,232 Z" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.6" />
+      {/* Knee pads */}
+      <ellipse cx="80" cy="248" rx="12" ry="9" fill={fill("genoux")} stroke={stk("genoux")} strokeWidth={sw("genoux")} filter={on("genoux") ? `url(#${fId})` : undefined} />
+      <ellipse cx="122" cy="248" rx="12" ry="9" fill={fill("genoux")} stroke={stk("genoux")} strokeWidth={sw("genoux")} filter={on("genoux") ? `url(#${fId})` : undefined} />
+      {/* Shin guards */}
+      <rect x="67" y="270" width="18" height="48" rx="5" fill={fill("tibias")} stroke={stk("tibias")} strokeWidth={sw("tibias")} filter={on("tibias") ? `url(#${fId})` : undefined} />
+      <rect x="115" y="270" width="18" height="48" rx="5" fill={fill("tibias")} stroke={stk("tibias")} strokeWidth={sw("tibias")} filter={on("tibias") ? `url(#${fId})` : undefined} />
+      {/* Feet */}
+      <ellipse cx="76" cy="347" rx="11" ry="6" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+      <ellipse cx="124" cy="347" rx="11" ry="6" fill="rgba(255,255,255,0.012)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+      {/* Annotation lines + labels */}
+      {annotations.map((a) => (
+        <g key={a.id} opacity={on(a.id) ? 1 : 0.15}>
+          <line x1={a.fx} y1={a.fy} x2={a.lx - 4} y2={a.ly} stroke={on(a.id) ? `${color}55` : "rgba(255,255,255,0.08)"} strokeWidth="0.6" strokeDasharray="3,2" />
+          <circle cx={a.lx - 4} cy={a.ly} r="1.5" fill={on(a.id) ? color : "rgba(255,255,255,0.1)"} />
+          <text x={a.lx} y={a.ly + 3.5} fill={on(a.id) ? `${color}cc` : "rgba(255,255,255,0.12)"} fontSize="8" fontFamily="Inter,sans-serif" fontWeight="500">{a.label}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 function SponsorsSection() {
   const [ref, v] = useReveal();
+  const tiers = [
+    { tier: "OR", color: "#cf9b3b", accent: true, zones: ["kimono", "epaules", "gants", "genoux", "tibias"], digital: ["Posts dédiés mensuels", "Présence compétitions", "Contenu vidéo exclusif", "Mention interview & médias"] },
+    { tier: "ARGENT", color: "#94a3b8", accent: false, zones: ["epaules", "genoux", "tibias"], digital: ["Mentions réseaux sociaux", "Stories sponsorisées", "Tag événements"] },
+    { tier: "BRONZE", color: "#b87333", accent: false, zones: ["tibias"], digital: ["Logo bannière web", "Remerciements en post", "Tag en story compétition"] },
+  ];
   return (
     <section id="sponsors" ref={ref} style={{ padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)", background: "linear-gradient(180deg,#0a0806,#06060a)", borderTop: "1px solid rgba(207,155,59,0.06)" }}>
-      <div style={{ maxWidth: 1000, margin: "0 auto", textAlign: "center", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Partenariats</div>
+      <div style={{ maxWidth: 820, margin: "0 auto", textAlign: "center", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
+        <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Partenariats</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Investissez dans<br />un champion<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.9, color: "rgba(255,255,255,0.38)", maxWidth: 520, margin: "0 auto 48px" }}>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.9, color: "rgba(255,255,255,0.38)", maxWidth: 560, margin: "0 auto 20px" }}>
           18 ans, double champion de France, 86% de win rate, licencié FFK. Associez votre marque à un athlète en pleine ascension.
         </p>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: 1.6, color: "rgba(255,255,255,0.22)", maxWidth: 480, margin: "0 auto 48px" }}>
+          Choisissez vos emplacements de visibilité — du kimono aux gants, affichez votre logo là où il compte.
+        </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2 }}>
-          {[
-            { tier: "OR", color: "#cf9b3b", features: ["Logo rashguard (poitrine)", "Posts dédiés mensuels", "Présence compétitions", "Contenu vidéo exclusif", "Mention interview & médias"], accent: true },
-            { tier: "ARGENT", color: "#94a3b8", features: ["Logo rashguard (épaule)", "Mentions réseaux sociaux", "Stories sponsorisées", "Tag événements"], accent: false },
-            { tier: "BRONZE", color: "#b87333", features: ["Logo bannière web", "Remerciements en post", "Tag en story compétition"], accent: false },
-          ].map((t, i) => (
-            <div key={i} className="sponsorCard" style={{ padding: "36px 24px", background: "rgba(255,255,255,0.012)", border: t.accent ? "1px solid rgba(207,155,59,0.18)" : "1px solid rgba(255,255,255,0.03)", position: "relative", overflow: "hidden", textAlign: "left", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
+          {tiers.map((t, i) => (
+            <div key={i} className="sponsorCard" style={{ padding: "28px 16px 24px", background: "rgba(255,255,255,0.012)", border: t.accent ? "1px solid rgba(207,155,59,0.18)" : "1px solid rgba(255,255,255,0.03)", position: "relative", overflow: "hidden", textAlign: "center", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
               {t.accent && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#cf9b3b,#e8b84a,#cf9b3b)" }} />}
-              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 8, color: t.color, marginBottom: 20, fontWeight: 700 }}>{t.tier}</div>
-              {t.features.map((f, j) => (
-                <div key={j} style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.42)", padding: "9px 0", borderBottom: "1px solid rgba(255,255,255,0.025)" }}>
-                  <span style={{ color: t.color, marginRight: 7 }}>&#10003;</span> {f}
-                </div>
-              ))}
+              <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 8, color: t.color, marginBottom: 4, fontWeight: 700 }}>{t.tier}</div>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", fontFamily: "'Inter',sans-serif", marginBottom: 16, letterSpacing: 1 }}>{t.zones.length} zone{t.zones.length > 1 ? "s" : ""} de placement</div>
+
+              {/* Fighter diagram */}
+              <FighterDiagram zones={t.zones} color={t.color} id={t.tier.toLowerCase()} />
+
+              {/* Separator */}
+              <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${t.color}22, transparent)`, margin: "20px 0 16px" }} />
+
+              {/* Digital benefits */}
+              <div style={{ textAlign: "left" }}>
+                <div style={{ fontSize: 9, letterSpacing: 3, color: "rgba(255,255,255,0.2)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 8, fontWeight: 600 }}>Visibilité digitale</div>
+                {t.digital.map((d, j) => (
+                  <div key={j} style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.38)", padding: "6px 0" }}>
+                    <span style={{ color: t.color, marginRight: 7 }}>&#10003;</span> {d}
+                  </div>
+                ))}
+              </div>
+
               <a href="#contact" className="cP" style={{
                 display: "block", textAlign: "center", marginTop: 20, padding: "11px 0",
                 background: t.accent ? "rgba(207,155,59,0.1)" : "rgba(255,255,255,0.025)",
@@ -659,6 +895,19 @@ function SponsorsSection() {
               }}>Contacter</a>
             </div>
           ))}
+        </div>
+
+        {/* Appel sponsors supplémentaires */}
+        <div style={{ marginTop: 48, padding: "32px 24px", background: "rgba(255,255,255,0.012)", border: "1px solid rgba(255,255,255,0.04)", textAlign: "center" }}>
+          <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, color: "#fff", letterSpacing: 3, textTransform: "uppercase", marginBottom: 12, fontWeight: 700 }}>
+            Ouvert à tous les partenaires
+          </div>
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, lineHeight: 1.9, color: "rgba(255,255,255,0.35)", maxWidth: 600, margin: "0 auto 16px" }}>
+            Ostéopathe, préparateur physique, marque de nutrition, équipementier, salle de sport, ou toute entreprise souhaitant s'associer à un champion — <span style={{ color: "#cf9b3b" }}>nous sommes ouverts à toutes les propositions</span>.
+          </p>
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: 1.7, color: "rgba(255,255,255,0.22)", maxWidth: 500, margin: "0 auto" }}>
+            Chaque partenaire bénéficie également d'un emplacement sur la <span style={{ color: "rgba(255,255,255,0.45)" }}>bannière sponsors du site</span>, visible sur toutes les pages.
+          </p>
         </div>
       </div>
     </section>
@@ -688,7 +937,7 @@ function ContactSection() {
   return (
     <section id="contact" ref={ref} style={{ padding: "clamp(80px,12vw,130px) clamp(20px,5vw,48px)", background: "linear-gradient(180deg, #0a0a10 0%, #08080e 100%)", borderTop: "1px solid rgba(207,155,59,0.08)" }}>
       <div style={{ maxWidth: 520, margin: "0 auto", textAlign: "center", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
-        <div style={{ fontSize: 10, letterSpacing: 6, color: "#cf9b3b", marginBottom: 12, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Contact</div>
+        <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Contact</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Passons à<br />l'action<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
@@ -727,10 +976,45 @@ function ContactSection() {
 }
 
 /* ─── Footer ─── */
+function SponsorMarquee() {
+  const logos = [
+    { name: "OSTÉO SPORT", icon: "+" },
+    { name: "NUTRI FORCE", icon: "◆" },
+    { name: "FIGHT GEAR PRO", icon: "●" },
+    { name: "PHYSIO MAX", icon: "+" },
+    { name: "ALPHA GYM", icon: "■" },
+    { name: "RECOVERY LAB", icon: "◆" },
+    { name: "COMBAT NUTRITION", icon: "●" },
+    { name: "FLEX TRAINING", icon: "■" },
+  ];
+  const row = [...logos, ...logos];
+  return (
+    <div style={{ overflow: "hidden", padding: "20px 0", borderTop: "1px solid rgba(207,155,59,0.06)", borderBottom: "1px solid rgba(207,155,59,0.06)", marginBottom: 28, position: "relative" }}>
+      <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 60, background: "linear-gradient(90deg, #04040a, transparent)", zIndex: 2 }} />
+      <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 60, background: "linear-gradient(270deg, #04040a, transparent)", zIndex: 2 }} />
+      <div style={{ display: "flex", gap: 48, animation: "sponsorScroll 30s linear infinite", width: "max-content" }}>
+        {row.map((l, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0, opacity: 0.18 }}>
+            <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 10, color: "#cf9b3b", lineHeight: 1 }}>{l.icon}</span>
+            <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 14, color: "#fff", letterSpacing: 4, textTransform: "uppercase", fontWeight: 600, whiteSpace: "nowrap" }}>{l.name}</span>
+          </div>
+        ))}
+      </div>
+      <div style={{ textAlign: "center", marginTop: 10 }}>
+        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.1)", letterSpacing: 2, textTransform: "uppercase" }}>Emplacement réservé aux partenaires</span>
+      </div>
+    </div>
+  );
+}
+
 function Footer() {
   return (
-    <footer style={{ padding: "40px clamp(20px,5vw,48px)", background: "#04040a", textAlign: "center", position: "relative" }}>
+    <footer style={{ padding: "40px clamp(20px,5vw,48px) 24px", background: "#04040a", textAlign: "center", position: "relative" }}>
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, #cf9b3b, #e8b84a, #cf9b3b, transparent)", backgroundSize: "200% 100%", animation: "footerGlow 4s ease-in-out infinite" }} />
+
+      {/* Bannière sponsors défilante */}
+      <SponsorMarquee />
+
       <div style={{ display: "flex", justifyContent: "center", gap: 32, marginBottom: 20, flexWrap: "wrap" }}>
         <a href={FIGHTER.social.instagram} target="_blank" rel="noopener noreferrer" style={{
           color: "rgba(255,255,255,0.3)", textDecoration: "none", fontFamily: "'Inter',sans-serif",
@@ -775,8 +1059,8 @@ function FloatingBio() {
       const contact = document.getElementById("contact");
       if (!hero || !contact) return;
       const pastHero = hero.getBoundingClientRect().bottom < 0;
-      const nearContact = contact.getBoundingClientRect().top < window.innerHeight + 100;
-      setVisible(pastHero && !nearContact);
+      const atContact = contact.getBoundingClientRect().top < window.innerHeight * 0.25;
+      setVisible(pastHero && !atContact);
     };
     window.addEventListener("scroll", h, { passive: true });
     return () => window.removeEventListener("scroll", h);
@@ -887,7 +1171,7 @@ export default function App() {
   const [active, setActive] = useState("hero");
   useEffect(() => {
     const h = () => {
-      const secs = ["hero", "discipline", "about", "gallery", "palmares", "team", "sponsors", "contact"];
+      const secs = ["hero", "discipline", "about", "gallery", "palmares", "events", "team", "sponsors", "contact"];
       for (const id of secs) {
         const el = document.getElementById(id);
         if (el) { const r = el.getBoundingClientRect(); if (r.top <= 140 && r.bottom > 140) { setActive(id); break; } }
@@ -907,13 +1191,15 @@ export default function App() {
         @keyframes breathe{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.08);opacity:.7}}
         @keyframes scrollH{0%,100%{transform:translateY(0);opacity:.25}50%{transform:translateY(8px);opacity:.5}}
         @keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+        @keyframes fireSweep{0%{background-position:100% center;filter:drop-shadow(0 0 8px rgba(207,155,59,0.2))}50%{background-position:0% center;filter:drop-shadow(0 0 20px rgba(255,107,43,0.5))}100%{background-position:100% center;filter:drop-shadow(0 0 8px rgba(207,155,59,0.2))}}
         @keyframes footerGlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+        @keyframes sponsorScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         .cP:hover{transform:translateY(-2px)!important;box-shadow:0 8px 40px rgba(207,155,59,0.35)!important}
         .cS:hover{border-color:rgba(207,155,59,0.4)!important;color:#cf9b3b!important}
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
-        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{display:none!important}}
+        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{display:none!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}}
         @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
       <ScrollProgress />
@@ -923,6 +1209,7 @@ export default function App() {
       <AboutSection />
       <GallerySection />
       <PalmaresSection />
+      <EventsSection />
       <CoachSection />
       <SponsorsSection />
       <ContactSection />
