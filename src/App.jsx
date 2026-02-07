@@ -1177,9 +1177,9 @@ function FloatingSpotify() {
         <span style={{ fontFamily: "'Oswald',sans-serif", fontSize: 8, color: "#1DB954", letterSpacing: 1, writingMode: "vertical-lr" }}>MIX</span>
       </button>
 
-      {/* Carte flottante droite */}
+      {/* Carte flottante droite — sous la bio */}
       <div className={`floatingSpotify${mobileOpen ? " mSpOpen" : ""}`} style={{
-        position: "fixed", right: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : 280}px)`,
+        position: "fixed", right: 20, bottom: 80, transform: `translateX(${visible ? 0 : 280}px)`,
         zIndex: 950, width: 220, padding: "22px 18px",
         background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
         border: "1px solid rgba(30,215,96,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
@@ -1295,7 +1295,7 @@ function FloatingBio() {
 
       {/* Carte flottante */}
       <div className={`floatingBio${mobileOpen ? " mOpen" : ""}`} style={{
-        position: "fixed", right: 20, top: "50%", transform: `translateY(-50%) translateX(${visible ? 0 : 280}px)`,
+        position: "fixed", right: 20, top: 80, transform: `translateX(${visible ? 0 : 280}px)`,
         zIndex: 950, width: 220, padding: "22px 18px",
         background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
         border: "1px solid rgba(207,155,59,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
@@ -1474,7 +1474,7 @@ export default function App() {
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
-        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.floatingSpotify{transform:translateY(-50%) translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingSpotify.mSpOpen{transform:translateY(-50%) translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;width:200px!important;padding:18px 14px!important}.mSpotifyTab{display:flex!important}.mSpotifyClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
+        @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;top:auto!important;bottom:60px!important;width:200px!important;padding:18px 14px!important;max-height:80vh!important;overflow-y:auto!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.floatingSpotify{transform:translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingSpotify.mSpOpen{transform:translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;bottom:60px!important;width:200px!important;padding:18px 14px!important}.mSpotifyTab{display:flex!important}.mSpotifyClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
         @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}.floatingSpotify{right:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
       <ScrollProgress />
