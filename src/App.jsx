@@ -1267,7 +1267,7 @@ export default function App() {
     <div style={{ background: "#06060a", minHeight: "100vh", color: "#fff" }}>
       <style>{`
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        html{scroll-behavior:smooth}
+        html{scroll-behavior:smooth;overflow-x:hidden}
         body{overflow-x:hidden;-webkit-font-smoothing:antialiased}
         ::selection{background:rgba(207,155,59,0.3);color:#fff}
         @keyframes breathe{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.08);opacity:.7}}
