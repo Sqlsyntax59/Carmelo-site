@@ -89,6 +89,9 @@ function useReveal() {
 function Navbar({ activeSection }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [eggClicks, setEggClicks] = useState(0);
+  const [showMma, setShowMma] = useState(false);
+  const eggTimer = useRef(null);
   const links = [
     { id: "hero", label: "Accueil" }, { id: "discipline", label: "Discipline" },
     { id: "about", label: "Parcours" }, { id: "gallery", label: "Galerie" },
@@ -107,8 +110,19 @@ function Navbar({ activeSection }) {
         padding: "0 clamp(16px,4vw,40px)", height: 60,
         display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.4s"
       }}>
-        <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, fontWeight: 700, letterSpacing: 4, color: "#fff", zIndex: 1002 }}>
-          C<span style={{ color: "#cf9b3b" }}>Z</span>
+        <div style={{ zIndex: 1002, cursor: "pointer", userSelect: "none" }} onClick={() => {
+          clearTimeout(eggTimer.current);
+          const n = eggClicks + 1;
+          if (n >= 3) { setShowMma(true); setEggClicks(0); }
+          else { setEggClicks(n); eggTimer.current = setTimeout(() => setEggClicks(0), 800); }
+        }}>
+          {showMma ? (
+            <video src="/images/logo-mma.mp4" autoPlay muted playsInline onEnded={() => setShowMma(false)} style={{ height: 40, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 6px rgba(207,155,59,0.3))", lineHeight: 0 }} />
+          ) : (
+            <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, fontWeight: 700, letterSpacing: 4, color: "#fff" }}>
+              C<span style={{ color: "#cf9b3b" }}>Z</span>
+            </div>
+          )}
         </div>
         <div className="navD" style={{ display: "flex", gap: 22, alignItems: "center" }}>
           {links.map(l => (
@@ -192,7 +206,7 @@ function HeroSection() {
           lineHeight: 0.88, margin: "0 0 20px", color: "#fff", letterSpacing: 4, textTransform: "uppercase",
           textShadow: "0 0 100px rgba(207,155,59,0.12)"
         }}>
-          <span style={{ display: "block", color: "rgba(255,255,255,0.4)", fontSize: "0.55em", letterSpacing: 12 }}>{FIGHTER.firstName}</span>
+          <span style={{ display: "block", color: "rgba(255,255,255,0.55)", fontSize: "0.55em", letterSpacing: 12 }}>{FIGHTER.firstName}</span>
           <span style={{
             background: "linear-gradient(90deg, #fff 0%, #cf9b3b 25%, #e8b84a 50%, #cf9b3b 75%, #fff 100%)",
             backgroundSize: "400% 100%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
@@ -201,16 +215,16 @@ function HeroSection() {
         </h1>
 
         <div style={{
-          display: "inline-block", padding: "11px 32px",
+          display: "inline-flex", alignItems: "center", gap: 0, padding: "4px 16px 4px 0",
           background: "linear-gradient(135deg, #cf9b3b 0%, #a67c2e 50%, #cf9b3b 100%)",
           color: "#06060a", fontFamily: "'Oswald',sans-serif", fontWeight: 700,
-          fontSize: 13, letterSpacing: 4, textTransform: "uppercase",
+          fontSize: 12, letterSpacing: 4, textTransform: "uppercase",
           boxShadow: "0 0 50px rgba(207,155,59,0.2), inset 0 1px 0 rgba(255,255,255,0.2)"
-        }}><svg width="18" height="18" viewBox="0 0 24 24" fill="#06060a" style={{ verticalAlign: "middle", marginRight: 6, marginTop: -2 }}><path d="M5 3h14v2a7 7 0 01-14 0V3z" fill="#06060a" stroke="#06060a" strokeWidth="1"/><path d="M7.5 3H3v2a3 3 0 003 3h.5" fill="none" stroke="#06060a" strokeWidth="1.5" strokeLinecap="round"/><path d="M16.5 3H21v2a3 3 0 01-3 3h-.5" fill="none" stroke="#06060a" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 12v3" stroke="#06060a" strokeWidth="1.5"/><path d="M8 18h8v1H8z" fill="#06060a"/><path d="M9 15h6a1 1 0 011 1v2H8v-2a1 1 0 011-1z" fill="#06060a"/></svg>2x {FIGHTER.title}</div>
+        }}><img src="/images/medaille-cocarde.png" alt="" style={{ height: 90, width: "auto", marginTop: -30, marginBottom: -30, marginLeft: -44 }} />2x {FIGHTER.title}</div>
 
-        <div style={{ marginTop: 16, fontFamily: "'Oswald',sans-serif", fontSize: 20, letterSpacing: 6, color: "rgba(255,255,255,0.7)" }}>
+        <div style={{ marginTop: 16, fontFamily: "'Oswald',sans-serif", fontSize: 20, letterSpacing: 6, color: "rgba(255,255,255,0.82)" }}>
           <span style={{ color: "#4ade80", fontWeight: 700 }}>{FIGHTER.record.wins}W</span>
-          <span style={{ color: "rgba(255,255,255,0.2)", margin: "0 8px" }}>—</span>
+          <span style={{ color: "rgba(255,255,255,0.35)", margin: "0 8px" }}>—</span>
           <span style={{ color: "#ef4444", fontWeight: 700 }}>{FIGHTER.record.losses}L</span>
         </div>
 
@@ -224,7 +238,7 @@ function HeroSection() {
               <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(32px,5vw,50px)", color: "#fff", lineHeight: 1, fontWeight: 700 }}>
                 <AnimatedNumber target={s.value} suffix={s.suffix || ""} />
               </div>
-              <div style={{ fontSize: 9, letterSpacing: 3, color: "rgba(255,255,255,0.28)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 7, fontWeight: 600 }}>{s.label}</div>
+              <div style={{ fontSize: 9, letterSpacing: 3, color: "rgba(255,255,255,0.62)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 7, fontWeight: 600 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -253,7 +267,7 @@ function AboutSection() {
       <div style={{ maxWidth: 960, margin: "0 auto", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
         <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Parcours</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 36px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
-          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>{" "}<span style={{ display: "inline-flex", width: 42, height: 28, borderRadius: 4, overflow: "hidden", verticalAlign: "middle", marginLeft: 12, border: "2px solid rgba(255,255,255,0.15)", boxShadow: "0 2px 12px rgba(0,0,0,0.4)" }}><span style={{ flex: 1, background: "#002395" }} /><span style={{ flex: 1, background: "#fff" }} /><span style={{ flex: 1, background: "#ED2939" }} /></span><br /><span className="fireLine" style={{
+          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-3ans.png" alt="" style={{ height: "clamp(32px,4.5vw,52px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-titres.png" alt="" style={{ height: "clamp(36px,5vw,58px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br /><span className="fireLine" style={{
             fontSize: "clamp(20px,3.5vw,40px)",
             background: "linear-gradient(90deg, rgba(255,255,255,0.15) 0%, #cf9b3b 15%, #e8b84a 25%, #ff6b2b 40%, #cf9b3b 55%, rgba(255,255,255,0.15) 70%)",
             backgroundSize: "300% 100%",
@@ -261,7 +275,7 @@ function AboutSection() {
             animation: "fireSweep 3s ease-in-out infinite",
             display: "inline-block",
             filter: "drop-shadow(0 0 12px rgba(207,155,59,0.4))"
-          }}>Une trajectoire fulgurante<span style={{ color: "#cf9b3b" }}>.</span></span>
+          }}>Une trajectoire fulgurante<span style={{ color: "#cf9b3b" }}>.</span></span>{" "}<img src="/images/picto-trajectoire.png" alt="" style={{ height: "clamp(32px,4vw,48px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} />
         </h2>
         <div style={{ maxWidth: 620 }}>
           {FIGHTER.bio.map((p, i) => (
@@ -291,12 +305,12 @@ function AboutSection() {
           <div style={{ display: "flex", gap: 28, marginTop: 16, flexWrap: "wrap" }}>
             {[
               { l: "Soumissions", n: 14, c: "#cf9b3b", p: "78%" },
-              { l: "Décisions", n: 3, c: "rgba(255,255,255,0.5)", p: "17%" },
+              { l: "Décisions", n: 3, c: "rgba(255,255,255,0.65)", p: "17%" },
               { l: "KO/TKO", n: 1, c: "#ef4444", p: "5%" },
             ].map((m, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{ width: 10, height: 10, background: m.c, borderRadius: 2 }} />
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.6)", fontWeight: 500 }}>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>
                   {m.l} · {m.n} <span style={{ color: m.c, fontWeight: 700 }}>({m.p})</span>
                 </span>
               </div>
@@ -377,7 +391,7 @@ function GallerySection() {
           }}>
             <div style={{
               fontFamily: "'Oswald',sans-serif", fontSize: "clamp(12px,2vw,16px)",
-              color: "rgba(255,255,255,0.7)", letterSpacing: 3, textTransform: "uppercase", fontWeight: 500
+              color: "rgba(255,255,255,0.82)", letterSpacing: 3, textTransform: "uppercase", fontWeight: 500
             }}>{PHOTOS[active].desc}</div>
           </div>
 
@@ -487,19 +501,22 @@ function PalmaresSection() {
           })}
         </div>
 
-        {/* Et ensuite — Ambition fusionnée */}
+        {/* Et ensuite — Ambition & Sponsoring */}
         <div style={{ marginTop: 64, borderTop: "1px solid rgba(207,155,59,0.08)", paddingTop: 48 }}>
           <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Et ensuite</div>
-          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(22px,4vw,36px)", color: "#fff", lineHeight: 1.1, margin: "0 0 16px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
-            L'objectif est clair<span style={{ color: "#cf9b3b" }}>.</span>
+          <h3 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(22px,4vw,36px)", color: "#fff", lineHeight: 1.1, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
+            L'objectif est clair : passer au niveau supérieur<span style={{ color: "#cf9b3b" }}>.</span>
           </h3>
-          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: "rgba(255,255,255,0.42)", maxWidth: 560, marginBottom: 36 }}>
-            À 18 ans, Carmelo a déjà prouvé qu'il fait partie de l'élite française. La prochaine étape : la scène européenne, puis le circuit professionnel.
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: "rgba(255,255,255,0.58)", maxWidth: 600, marginBottom: 12 }}>
+            À seulement 18 ans, Carmelo Zambelli s'est déjà imposé parmi les jeunes athlètes les plus prometteurs du Karaté Mix français. La prochaine étape est décisive : accéder au circuit européen, puis franchir le cap du professionnalisme.
+          </p>
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: "rgba(255,255,255,0.58)", maxWidth: 600, marginBottom: 36 }}>
+            Aujourd'hui, Carmelo construit un projet sportif ambitieux et recherche des partenaires prêts à soutenir une trajectoire en pleine accélération, portée par des valeurs fortes : discipline, performance et engagement.
           </p>
           {[
-            { phase: "Court terme", goal: "Passage professionnel", icon: "⚡" },
-            { phase: "Moyen terme", goal: "Championnat d'Europe FFK", icon: "🇪🇺" },
-            { phase: "Long terme", goal: "Représenter la France à l'international", icon: "🇫🇷" },
+            { phase: "Court terme", subtitle: "Professionnalisation", goal: "Structurer sa carrière, multiplier les combats et intégrer les premiers événements majeurs.", icon: "/images/picto-eclair.png" },
+            { phase: "Moyen terme", subtitle: "Scène européenne FFK", goal: "Participer aux compétitions internationales et s'installer durablement parmi l'élite.", icon: "/images/picto-eu.png" },
+            { phase: "Long terme", subtitle: "Porter les couleurs de la France", goal: "Représenter la France au plus haut niveau et devenir une référence du Karaté Mix.", icon: "/images/picto-fr.png" },
           ].map((o, i) => (
             <div key={i} style={{
               display: "flex", gap: 20, alignItems: "flex-start", padding: "24px 0",
@@ -507,18 +524,19 @@ function PalmaresSection() {
               opacity: v ? 1 : 0, transition: `opacity 0.6s ${0.4 + i * 0.15}s`
             }}>
               <div style={{
-                width: 42, height: 42, display: "flex", alignItems: "center", justifyContent: "center",
-                background: "rgba(207,155,59,0.08)", border: "1px solid rgba(207,155,59,0.12)", fontSize: 18, flexShrink: 0
-              }}>{o.icon}</div>
+                width: 48, height: 48, display: "flex", alignItems: "center", justifyContent: "center",
+                flexShrink: 0
+              }}><img src={o.icon} alt={o.phase} style={{ width: 48, height: 48, objectFit: "contain", filter: "drop-shadow(0 2px 6px rgba(207,155,59,0.3))" }} /></div>
               <div>
-                <div style={{ fontSize: 9, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 5, fontWeight: 700 }}>{o.phase}</div>
-                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, color: "#fff", fontWeight: 500, letterSpacing: 1 }}>{o.goal}</div>
+                <div style={{ fontSize: 9, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 4, fontWeight: 700 }}>{o.phase}</div>
+                <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, color: "#fff", fontWeight: 500, letterSpacing: 1, marginBottom: 6 }}>{o.subtitle}</div>
+                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>{o.goal}</div>
               </div>
             </div>
           ))}
           <div style={{ marginTop: 32, padding: "28px 24px", borderLeft: "2px solid #cf9b3b", background: "rgba(207,155,59,0.03)" }}>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, lineHeight: 1.8, color: "rgba(255,255,255,0.6)", fontStyle: "italic", margin: 0 }}>
-              « 14 soumissions sur 18 victoires. Sur le sol, personne ne m'échappe. »
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, lineHeight: 1.8, color: "rgba(255,255,255,0.75)", fontStyle: "italic", margin: 0 }}>
+              « 14 soumissions sur 18 victoires.<br />Mon style, c'est le contrôle. Mon objectif, c'est le sommet. »
             </p>
             <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 12, letterSpacing: 4, color: "#cf9b3b", marginTop: 14, textTransform: "uppercase" }}>— Carmelo Zambelli</div>
           </div>
@@ -552,7 +570,7 @@ function EventsSection() {
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Prochains événements<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.9, color: "rgba(255,255,255,0.38)", maxWidth: 560, marginBottom: 44 }}>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.9, color: "rgba(255,255,255,0.55)", maxWidth: 560, marginBottom: 44 }}>
           Compétitions officielles Karaté Mix sous l'égide de la Fédération Française de Karaté.
         </p>
 
@@ -567,12 +585,12 @@ function EventsSection() {
             }}>
               <div style={{ textAlign: "center", minWidth: 70 }}>
                 <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, color: "#cf9b3b", fontWeight: 700, lineHeight: 1 }}>{e.date.split(" ")[0]}</div>
-                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, letterSpacing: 2, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", marginTop: 4 }}>{e.date.split(" ").slice(1).join(" ")}</div>
+                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, letterSpacing: 2, color: "rgba(255,255,255,0.55)", textTransform: "uppercase", marginTop: 4 }}>{e.date.split(" ").slice(1).join(" ")}</div>
               </div>
               <div>
                 <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "#fff", fontWeight: 600, letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>{e.name}</div>
-                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)" }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ verticalAlign: "middle", marginRight: 4, marginTop: -2 }}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5"/><circle cx="12" cy="9" r="2.5" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5"/></svg>
+                <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.52)" }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ verticalAlign: "middle", marginRight: 4, marginTop: -2 }}><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="rgba(255,255,255,0.52)" strokeWidth="1.5"/><circle cx="12" cy="9" r="2.5" stroke="rgba(255,255,255,0.52)" strokeWidth="1.5"/></svg>
                   {e.location}
                 </div>
               </div>
@@ -624,7 +642,7 @@ function CoachSection() {
             <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 48px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
               Maître Philippe<br />Rollin<span style={{ color: "#cf9b3b" }}>.</span>
             </h2>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: "rgba(255,255,255,0.45)", margin: "0 0 32px" }}>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 2, color: "rgba(255,255,255,0.62)", margin: "0 0 32px" }}>
               {COACH.bio}
             </p>
             {/* Key stats */}
@@ -636,7 +654,7 @@ function CoachSection() {
               ].map((s, i) => (
                 <div key={i} style={{ textAlign: "center", minWidth: 80 }}>
                   <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 32, color: "#cf9b3b", fontWeight: 700, lineHeight: 1 }}>{s.n}</div>
-                  <div style={{ fontSize: 9, letterSpacing: 2, color: "rgba(255,255,255,0.3)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 6, fontWeight: 600 }}>{s.l}</div>
+                  <div style={{ fontSize: 9, letterSpacing: 2, color: "rgba(255,255,255,0.48)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 6, fontWeight: 600 }}>{s.l}</div>
                 </div>
               ))}
             </div>
@@ -667,7 +685,7 @@ function CoachSection() {
             }}>Qualifications</div>
             {COACH.credentials.map((c, i) => (
               <div key={i} style={{
-                fontFamily: "'Inter',sans-serif", fontSize: 13, color: "rgba(255,255,255,0.5)",
+                fontFamily: "'Inter',sans-serif", fontSize: 13, color: "rgba(255,255,255,0.65)",
                 padding: "12px 0", borderBottom: i < COACH.credentials.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                 display: "flex", alignItems: "center", gap: 10
               }}>
@@ -676,7 +694,7 @@ function CoachSection() {
             ))}
             <div style={{
               marginTop: 24, padding: "12px 16px", background: "rgba(207,155,59,0.06)",
-              fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.4)",
+              fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.55)",
               fontStyle: "italic", lineHeight: 1.6
             }}>
               « Carmelo est le produit d'une école de combat complète — du judo au jujitsu, en passant par le karaté.
@@ -708,7 +726,7 @@ function KarateMixSection() {
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Le Karaté Mix<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, lineHeight: 2, color: "rgba(255,255,255,0.45)", maxWidth: 620, marginBottom: 44 }}>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, lineHeight: 2, color: "rgba(255,255,255,0.62)", maxWidth: 620, marginBottom: 44 }}>
           Discipline officielle de la Fédération Française de Karaté (FFK), le Karaté Mix combine les techniques de frappe du karaté traditionnel avec le combat au sol issu du jujitsu et du grappling. Pieds, poings, projections et soumissions : un sport complet encadré par une fédération olympique.
         </p>
 
@@ -725,7 +743,7 @@ function KarateMixSection() {
             }}>
               <div style={{ marginBottom: 10 }}><img src={item.img} alt={item.title} style={{ width: 150, height: 150, objectFit: "contain" }} /></div>
               <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "#fff", fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: "uppercase" }}>{item.title}</div>
-              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.7 }}>{item.desc}</div>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.52)", lineHeight: 1.7 }}>{item.desc}</div>
             </div>
           ))}
         </div>
@@ -745,7 +763,7 @@ function KarateMixSection() {
               style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
             />
           </div>
-          <div style={{ marginTop: 8, fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: 1 }}>
+          <div style={{ marginTop: 8, fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.48)", letterSpacing: 1 }}>
             Source : Fédération Française de Karaté — Karaté Mix Saison 2024/2025
           </div>
         </div>
@@ -762,7 +780,7 @@ function KarateMixSection() {
             <span style={{ fontSize: 14 }}>&#8599;</span>
           </a>
           <a href="https://www.ffkarate.fr/karate-mix/" target="_blank" rel="noopener noreferrer" style={{
-            color: "rgba(255,255,255,0.35)", textDecoration: "none", fontFamily: "'Inter',sans-serif",
+            color: "rgba(255,255,255,0.52)", textDecoration: "none", fontFamily: "'Inter',sans-serif",
             fontSize: 11, letterSpacing: 2, fontWeight: 500, transition: "color 0.3s"
           }}>Règlement Karaté Mix &#8599;</a>
         </div>
@@ -856,10 +874,10 @@ function SponsorsSection() {
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Investissez dans<br />un champion<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.9, color: "rgba(255,255,255,0.38)", maxWidth: 560, margin: "0 auto 20px" }}>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: 1.9, color: "rgba(255,255,255,0.55)", maxWidth: 560, margin: "0 auto 20px" }}>
           18 ans, double champion de France, 86% de win rate, licencié FFK. Associez votre marque à un athlète en pleine ascension.
         </p>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: 1.6, color: "rgba(255,255,255,0.22)", maxWidth: 480, margin: "0 auto 48px" }}>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: 1.6, color: "rgba(255,255,255,0.55)", maxWidth: 480, margin: "0 auto 48px" }}>
           Choisissez vos emplacements de visibilité — du kimono aux gants, affichez votre logo là où il compte.
         </p>
 
@@ -868,7 +886,7 @@ function SponsorsSection() {
             <div key={i} className="sponsorCard" style={{ padding: "28px 16px 24px", background: "rgba(255,255,255,0.012)", border: t.accent ? "1px solid rgba(207,155,59,0.18)" : "1px solid rgba(255,255,255,0.03)", position: "relative", overflow: "hidden", textAlign: "center", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)" }}>
               {t.accent && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#cf9b3b,#e8b84a,#cf9b3b)" }} />}
               <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 22, letterSpacing: 8, color: t.color, marginBottom: 4, fontWeight: 700 }}>{t.tier}</div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", fontFamily: "'Inter',sans-serif", marginBottom: 16, letterSpacing: 1 }}>{t.zones.length} zone{t.zones.length > 1 ? "s" : ""} de placement</div>
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter',sans-serif", marginBottom: 16, letterSpacing: 1 }}>{t.zones.length} zone{t.zones.length > 1 ? "s" : ""} de placement</div>
 
               {/* Fighter diagram */}
               <FighterDiagram zones={t.zones} color={t.color} id={t.tier.toLowerCase()} />
@@ -878,9 +896,9 @@ function SponsorsSection() {
 
               {/* Digital benefits */}
               <div style={{ textAlign: "left" }}>
-                <div style={{ fontSize: 9, letterSpacing: 3, color: "rgba(255,255,255,0.2)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 8, fontWeight: 600 }}>Visibilité digitale</div>
+                <div style={{ fontSize: 9, letterSpacing: 3, color: "rgba(255,255,255,0.35)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 8, fontWeight: 600 }}>Visibilité digitale</div>
                 {t.digital.map((d, j) => (
-                  <div key={j} style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.38)", padding: "6px 0" }}>
+                  <div key={j} style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.55)", padding: "6px 0" }}>
                     <span style={{ color: t.color, marginRight: 7 }}>&#10003;</span> {d}
                   </div>
                 ))}
@@ -902,11 +920,11 @@ function SponsorsSection() {
           <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, color: "#fff", letterSpacing: 3, textTransform: "uppercase", marginBottom: 12, fontWeight: 700 }}>
             Ouvert à tous les partenaires
           </div>
-          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, lineHeight: 1.9, color: "rgba(255,255,255,0.35)", maxWidth: 600, margin: "0 auto 16px" }}>
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, lineHeight: 1.9, color: "rgba(255,255,255,0.52)", maxWidth: 600, margin: "0 auto 16px" }}>
             Ostéopathe, préparateur physique, marque de nutrition, équipementier, salle de sport, ou toute entreprise souhaitant s'associer à un champion — <span style={{ color: "#cf9b3b" }}>nous sommes ouverts à toutes les propositions</span>.
           </p>
-          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: 1.7, color: "rgba(255,255,255,0.22)", maxWidth: 500, margin: "0 auto" }}>
-            Chaque partenaire bénéficie également d'un emplacement sur la <span style={{ color: "rgba(255,255,255,0.45)" }}>bannière sponsors du site</span>, visible sur toutes les pages.
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: 1.7, color: "rgba(255,255,255,0.55)", maxWidth: 500, margin: "0 auto" }}>
+            Chaque partenaire bénéficie également d'un emplacement sur la <span style={{ color: "rgba(255,255,255,0.62)" }}>bannière sponsors du site</span>, visible sur toutes les pages.
           </p>
         </div>
       </div>
@@ -941,7 +959,7 @@ function ContactSection() {
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 20px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
           Passons à<br />l'action<span style={{ color: "#cf9b3b" }}>.</span>
         </h2>
-        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, lineHeight: 1.8, color: "rgba(255,255,255,0.32)", marginBottom: 40 }}>Sponsor, média, organisateur ou partenaire — envoyez votre proposition.</p>
+        <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, lineHeight: 1.8, color: "rgba(255,255,255,0.50)", marginBottom: 40 }}>Sponsor, média, organisateur ou partenaire — envoyez votre proposition.</p>
 
         {!sent ? (
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 8, textAlign: "left" }}>
@@ -949,8 +967,8 @@ function ContactSection() {
               <input type="text" name="name" placeholder="Nom" required style={{ ...iS, flex: 1, minWidth: 140 }} />
               <input type="email" name="email" placeholder="Email" required style={{ ...iS, flex: 1, minWidth: 140 }} />
             </div>
-            <select name="type" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.7)" }}>
-              <option value="" style={{ background: "#0a0a10", color: "rgba(255,255,255,0.5)" }}>Type de demande</option>
+            <select name="type" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.82)" }}>
+              <option value="" style={{ background: "#0a0a10", color: "rgba(255,255,255,0.65)" }}>Type de demande</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Sponsoring / Partenariat</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Presse / Média</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Événement</option>
@@ -967,7 +985,7 @@ function ContactSection() {
           <div style={{ padding: "44px 28px", background: "rgba(207,155,59,0.04)", border: "1px solid rgba(207,155,59,0.12)" }}>
             <div style={{ fontSize: 32, marginBottom: 14 }}>🥋</div>
             <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 24, color: "#fff", letterSpacing: 4, marginBottom: 6, fontWeight: 700 }}>MESSAGE ENVOYÉ</div>
-            <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)" }}>Réponse sous 48h.</div>
+            <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.52)" }}>Réponse sous 48h.</div>
           </div>
         )}
       </div>
@@ -1001,7 +1019,7 @@ function SponsorMarquee() {
         ))}
       </div>
       <div style={{ textAlign: "center", marginTop: 10 }}>
-        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.1)", letterSpacing: 2, textTransform: "uppercase" }}>Emplacement réservé aux partenaires</span>
+        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.28)", letterSpacing: 2, textTransform: "uppercase" }}>Emplacement réservé aux partenaires</span>
       </div>
     </div>
   );
@@ -1017,7 +1035,7 @@ function Footer() {
 
       <div style={{ display: "flex", justifyContent: "center", gap: 32, marginBottom: 20, flexWrap: "wrap" }}>
         <a href={FIGHTER.social.instagram} target="_blank" rel="noopener noreferrer" style={{
-          color: "rgba(255,255,255,0.3)", textDecoration: "none", fontFamily: "'Inter',sans-serif",
+          color: "rgba(255,255,255,0.48)", textDecoration: "none", fontFamily: "'Inter',sans-serif",
           fontSize: 11, letterSpacing: 2, fontWeight: 500, textTransform: "uppercase", transition: "color 0.3s",
           display: "flex", alignItems: "center", gap: 8
         }}>
@@ -1025,8 +1043,8 @@ function Footer() {
           Instagram
         </a>
       </div>
-      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.12)", letterSpacing: 1 }}>
-        © 2026 Carmelo Zambelli · APRAM · <a href="https://www.ffkarate.fr" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.2)", textDecoration: "none", transition: "color 0.3s" }}>FFK</a>
+      <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.30)", letterSpacing: 1 }}>
+        © 2026 Carmelo Zambelli · APRAM · <a href="https://www.ffkarate.fr" target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.35)", textDecoration: "none", transition: "color 0.3s" }}>FFK</a>
       </div>
     </footer>
   );
@@ -1103,13 +1121,13 @@ function FloatingBio() {
         <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 15, color: "#fff", letterSpacing: 3, fontWeight: 700 }}>
           CARMELO <span style={{ color: "#cf9b3b" }}>ZAMBELLI</span>
         </div>
-        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.5)", letterSpacing: 2, fontFamily: "'Inter',sans-serif", marginTop: 4 }}>-70KG · KARATÉ MIX FFK</div>
+        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", letterSpacing: 2, fontFamily: "'Inter',sans-serif", marginTop: 4 }}>-70KG · KARATÉ MIX FFK</div>
       </div>
 
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 12 }}>
         <p style={{
           fontFamily: "'Inter',sans-serif", fontSize: 11, lineHeight: 1.7,
-          color: "rgba(255,255,255,0.72)", margin: 0
+          color: "rgba(255,255,255,0.85)", margin: 0
         }}>
           Passionné d'arts martiaux depuis l'enfance, Carmelo Zambelli est un jeune talent du Karaté Mix. Champion de France à 18 ans, il poursuit son ascension sur le circuit européen.
         </p>
@@ -1118,7 +1136,7 @@ function FloatingBio() {
       <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 14 }}>
         <p style={{
           fontFamily: "'Inter',sans-serif", fontSize: 10, lineHeight: 1.7,
-          color: "rgba(255,255,255,0.6)", margin: 0
+          color: "rgba(255,255,255,0.75)", margin: 0
         }}>
           Pour franchir une nouvelle étape, il recherche des partenaires prêts à soutenir un athlète ambitieux et à forte visibilité.
         </p>
@@ -1130,7 +1148,7 @@ function FloatingBio() {
         ].map((s, i) => (
           <div key={i} style={{ textAlign: "center" }}>
             <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 18, color: "#cf9b3b", fontWeight: 700, lineHeight: 1 }}>{s.n}</div>
-            <div style={{ fontSize: 7, letterSpacing: 2, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 3 }}>{s.l}</div>
+            <div style={{ fontSize: 7, letterSpacing: 2, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginTop: 3 }}>{s.l}</div>
           </div>
         ))}
       </div>
