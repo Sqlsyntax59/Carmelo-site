@@ -1161,9 +1161,9 @@ function FloatingSpotify() {
 
   return (
     <>
-      {/* Onglet mobile droite — sous le tab Bio */}
-      <button className="mSpotifyTab" onClick={() => setMobileOpen(true)} style={{
-        position: "fixed", right: 0, top: "calc(50% + 52px)",
+      {/* Onglet droite — desktop: après dismiss / mobile: toujours */}
+      <button className={`mSpotifyTab${dismissed ? " spDismissed" : ""}`} onClick={() => { setDismissed(false); setMobileOpen(true); }} style={{
+        position: "fixed", right: 0, bottom: 100,
         zIndex: 951, display: "none",
         background: "rgba(6,6,10,0.92)", backdropFilter: "blur(12px)",
         border: "1px solid rgba(30,215,96,0.25)", borderRight: "none",
@@ -1476,6 +1476,7 @@ export default function App() {
         .sponsorCard:hover{transform:translateY(-6px)!important;box-shadow:0 12px 40px rgba(207,155,59,0.12)!important;border-color:rgba(207,155,59,0.25)!important}
         .galBtn:hover{background:rgba(207,155,59,0.3)!important;border-color:rgba(207,155,59,0.4)!important}
         input:focus,textarea:focus,select:focus{border-color:rgba(207,155,59,0.3)!important}
+        .mSpotifyTab.spDismissed{display:flex}
         @media(max-width:768px){.navD{display:none!important}.mBtn{display:block!important}.floatingBio{transform:translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingBio.mOpen{transform:translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;top:auto!important;bottom:60px!important;width:200px!important;padding:18px 14px!important;max-height:80vh!important;overflow-y:auto!important}.mFloatTab{display:flex!important}.mFloatClose{display:block!important}.floatingSpotify{transform:translateX(280px)!important;opacity:0!important;pointer-events:none!important}.floatingSpotify.mSpOpen{transform:translateX(0)!important;opacity:1!important;pointer-events:auto!important;right:12px!important;bottom:60px!important;width:200px!important;padding:18px 14px!important}.mSpotifyTab{display:flex!important}.mSpotifyClose{display:block!important}.eventCard{grid-template-columns:1fr!important;gap:12px!important;text-align:left!important}.sponsorGrid{grid-template-columns:1fr!important}.coachGrid{grid-template-columns:1fr!important}}
         @media(max-width:1280px){.floatingBio{right:8px!important;width:190px!important;padding:18px 14px!important}.floatingSpotify{right:8px!important;width:190px!important;padding:18px 14px!important}}
       `}</style>
