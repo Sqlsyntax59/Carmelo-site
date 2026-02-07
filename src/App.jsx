@@ -85,7 +85,7 @@ function useReveal() {
   return [ref, v];
 }
 
-function useSwipe(ref, { onSwipeLeft, onSwipeRight }) {
+function useSwipe(ref, { onSwipeLeft, onSwipeRight, onTap }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -101,13 +101,15 @@ function useSwipe(ref, { onSwipeLeft, onSwipeRight }) {
       if (!tracking) return;
       tracking = false;
       const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
       if (Math.abs(dx) > 50) { dx < 0 ? onSwipeLeft() : onSwipeRight(); }
+      else if (Math.abs(dx) < 12 && Math.abs(dy) < 12 && onTap) { onTap(); }
     };
     el.addEventListener("touchstart", onStart, { passive: true });
     el.addEventListener("touchmove", onMove, { passive: false });
     el.addEventListener("touchend", onEnd, { passive: true });
     return () => { el.removeEventListener("touchstart", onStart); el.removeEventListener("touchmove", onMove); el.removeEventListener("touchend", onEnd); };
-  }, [ref, onSwipeLeft, onSwipeRight]);
+  }, [ref, onSwipeLeft, onSwipeRight, onTap]);
 }
 
 /* ─── Navbar ─── */
@@ -365,6 +367,7 @@ function GallerySection() {
   useSwipe(carouselRef, {
     onSwipeLeft: () => { setActive(p => (p + 1) % PHOTOS.length); setPaused(true); },
     onSwipeRight: () => { setActive(p => (p - 1 + PHOTOS.length) % PHOTOS.length); setPaused(true); },
+    onTap: () => { setPaused(true); setLightbox(true); },
   });
 
   const photoColors = ["#1a1210", "#0d1020", "#120f0a", "#0a1018"];
