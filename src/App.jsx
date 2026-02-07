@@ -161,12 +161,12 @@ function Navbar({ activeSection }) {
             }}>{l.label}</a>
           ))}
         </div>
-        <button onClick={() => setOpen(!open)} className="mBtn" style={{
+        <button onClick={() => setOpen(!open)} className="mBtn" aria-label={open ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={open} style={{
           display: "none", background: "none", border: "none", color: "#cf9b3b", fontSize: 24, cursor: "pointer", zIndex: 1002, position: "relative"
         }}>{open ? "✕" : "☰"}</button>
       </nav>
       {open && (
-        <div style={{
+        <div role="navigation" aria-label="Menu principal" style={{
           position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
           background: "#06060a", display: "flex", flexDirection: "column",
           alignItems: "center", justifyContent: "center", gap: 28, zIndex: 999
@@ -199,7 +199,7 @@ function HeroSection() {
       position: "relative", overflow: "hidden",
       background: "#06060a"
     }}>
-      <img src="/images/combat-cage.jpg" alt="" onError={(e) => { e.target.style.opacity = 0.1; }} style={{
+      <img src="/images/combat-cage.jpg" alt="Combat de Carmelo Zambelli en cage" fetchpriority="high" width="1200" height="800" onError={(e) => { e.target.style.opacity = 0.1; }} style={{
         position: "absolute", inset: 0, width: "100%", height: "120%",
         objectFit: "cover", objectPosition: "center 30%", opacity: 0.25,
         filter: "saturate(0.6)", transition: "opacity 1.5s",
@@ -220,7 +220,7 @@ function HeroSection() {
           padding: "5px 18px", border: "1px solid rgba(207,155,59,0.25)", background: "rgba(207,155,59,0.06)",
           opacity: ld ? 1 : 0, transition: "opacity 0.8s 0.4s"
         }}>
-          <img src="/images/logo-ffk.svg" alt="FFK" style={{ height: 18, flexShrink: 0, filter: "brightness(1.2)" }} />
+          <img src="/images/logo-ffk.svg" alt="FFK" width="18" height="18" style={{ height: 18, flexShrink: 0, filter: "brightness(1.2)" }} />
           <span style={{ fontSize: 9, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Fédération Française de Karaté</span>
         </div>
 
@@ -247,7 +247,7 @@ function HeroSection() {
           color: "#06060a", fontFamily: "'Oswald',sans-serif", fontWeight: 700,
           fontSize: 12, letterSpacing: 4, textTransform: "uppercase",
           boxShadow: "0 0 50px rgba(207,155,59,0.2), inset 0 1px 0 rgba(255,255,255,0.2)"
-        }}><img src="/images/medaille-cocarde.png" alt="" style={{ height: 90, width: "auto", marginTop: -30, marginBottom: -30, marginLeft: -44 }} />2x {FIGHTER.title}</div>
+        }}><img src="/images/medaille-cocarde.png" alt="Médaille cocarde" width="90" height="90" style={{ height: 90, width: "auto", marginTop: -30, marginBottom: -30, marginLeft: -44 }} />2x {FIGHTER.title}</div>
 
         <div style={{ marginTop: 16, fontFamily: "'Oswald',sans-serif", fontSize: 20, letterSpacing: 6, color: "rgba(255,255,255,0.82)" }}>
           <span style={{ color: "#4ade80", fontWeight: 700 }}>{FIGHTER.record.wins}W</span>
@@ -312,7 +312,7 @@ function AboutSection() {
       <div style={{ maxWidth: 960, margin: "0 auto", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(40px)", transition: "all 1s cubic-bezier(0.16,1,0.3,1)" }}>
         <div style={{ fontSize: 13, letterSpacing: 7, color: "#cf9b3b", marginBottom: 14, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>Parcours</div>
         <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "clamp(30px,5vw,56px)", color: "#fff", lineHeight: 1.05, margin: "0 0 36px", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase" }}>
-          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-3ans.png" alt="" style={{ height: "clamp(32px,4.5vw,52px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-titres.png" alt="" style={{ height: "clamp(36px,5vw,58px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br /><span className="fireLine" style={{
+          3 ans de pratique<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-3ans.png" alt="3 ans" width="52" height="52" loading="lazy" style={{ height: "clamp(32px,4.5vw,52px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br />2 titres nationaux<span style={{ color: "#cf9b3b" }}>.</span>{" "}<img src="/images/picto-titres.png" alt="Titres" width="58" height="58" loading="lazy" style={{ height: "clamp(36px,5vw,58px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} /><br /><span className="fireLine" style={{
             fontSize: "clamp(20px,3.5vw,40px)",
             background: "linear-gradient(90deg, rgba(255,255,255,0.15) 0%, #cf9b3b 15%, #e8b84a 25%, #ff6b2b 40%, #cf9b3b 55%, rgba(255,255,255,0.15) 70%)",
             backgroundSize: "300% 100%",
@@ -320,7 +320,7 @@ function AboutSection() {
             animation: "fireSweep 3s ease-in-out infinite",
             display: "inline-block",
             filter: "drop-shadow(0 0 12px rgba(207,155,59,0.4))"
-          }}>Une trajectoire fulgurante<span style={{ color: "#cf9b3b" }}>.</span></span>{" "}<img src="/images/picto-trajectoire.png" alt="" style={{ height: "clamp(32px,4vw,48px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} />
+          }}>Une trajectoire fulgurante<span style={{ color: "#cf9b3b" }}>.</span></span>{" "}<img src="/images/picto-trajectoire.png" alt="Trajectoire" width="48" height="48" loading="lazy" style={{ height: "clamp(32px,4vw,48px)", verticalAlign: "middle", marginLeft: 12, marginBottom: 14, filter: "drop-shadow(0 2px 8px rgba(207,155,59,0.4))" }} />
         </h2>
         <div style={{ maxWidth: 620 }}>
           {FIGHTER.bio.map((p, i) => (
@@ -452,13 +452,13 @@ function GallerySection() {
           </div>
 
           {/* Prev/Next */}
-          <button onClick={() => { setActive(p => (p - 1 + PHOTOS.length) % PHOTOS.length); setPaused(true); }} className="galBtn" style={{
+          <button onClick={() => { setActive(p => (p - 1 + PHOTOS.length) % PHOTOS.length); setPaused(true); }} className="galBtn" aria-label="Photo précédente" style={{
             position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", zIndex: 3,
             background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)",
             color: "#fff", width: 44, height: 44, cursor: "pointer", fontSize: 18,
             display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s", backdropFilter: "blur(8px)"
           }}>&#8249;</button>
-          <button onClick={() => { setActive(p => (p + 1) % PHOTOS.length); setPaused(true); }} className="galBtn" style={{
+          <button onClick={() => { setActive(p => (p + 1) % PHOTOS.length); setPaused(true); }} className="galBtn" aria-label="Photo suivante" style={{
             position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", zIndex: 3,
             background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)",
             color: "#fff", width: 44, height: 44, cursor: "pointer", fontSize: 18,
@@ -510,15 +510,15 @@ function Lightbox({ photos, active, onClose, onPrev, onNext }) {
   }, [onClose]);
   useSwipe(lbRef, { onSwipeLeft: onNext, onSwipeRight: onPrev });
   return (
-    <div ref={lbRef} onClick={(e) => { if (e.target === e.currentTarget) onClose(); }} style={{
+    <div ref={lbRef} role="dialog" aria-label="Galerie photo en plein écran" aria-modal="true" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }} style={{
       position: "fixed", inset: 0, zIndex: 2000, background: "rgba(0,0,0,0.96)",
       display: "flex", alignItems: "center", justifyContent: "center",
       opacity: show ? 1 : 0, transition: "opacity 0.3s"
     }}>
       <div style={{ position: "absolute", top: 16, left: 20, fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.6)" }}>{active + 1} / {photos.length}</div>
-      <button onClick={onClose} style={{ position: "absolute", top: 12, right: 16, background: "none", border: "1px solid rgba(207,155,59,0.3)", color: "#cf9b3b", width: 40, height: 40, fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>&#10005;</button>
-      <button onClick={onPrev} style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 56, height: 56, cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>&#8249;</button>
-      <button onClick={onNext} style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 56, height: 56, cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>&#8250;</button>
+      <button onClick={onClose} aria-label="Fermer la galerie" style={{ position: "absolute", top: 12, right: 16, background: "none", border: "1px solid rgba(207,155,59,0.3)", color: "#cf9b3b", width: 40, height: 40, fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>&#10005;</button>
+      <button onClick={onPrev} aria-label="Photo précédente" style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 56, height: 56, cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>&#8249;</button>
+      <button onClick={onNext} aria-label="Photo suivante" style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 56, height: 56, cursor: "pointer", fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>&#8250;</button>
       <img src={photos[active].src} alt={photos[active].alt} onError={(e) => { e.target.style.opacity = 0.1; e.target.alt = "Photo non disponible"; }} style={{ maxWidth: "90vw", maxHeight: "85vh", objectFit: "contain" }} />
       <div style={{ position: "absolute", bottom: 24, left: 0, right: 0, textAlign: "center", fontFamily: "'Oswald',sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", letterSpacing: 3, textTransform: "uppercase" }}>{photos[active].desc}</div>
     </div>
@@ -610,7 +610,7 @@ function PalmaresSection() {
               <div style={{
                 width: 48, height: 48, display: "flex", alignItems: "center", justifyContent: "center",
                 flexShrink: 0
-              }}><img src={o.icon} alt={o.phase} style={{ width: 48, height: 48, objectFit: "contain", filter: "drop-shadow(0 2px 6px rgba(207,155,59,0.3))" }} /></div>
+              }}><img src={o.icon} alt={o.phase} width="48" height="48" loading="lazy" style={{ width: 48, height: 48, objectFit: "contain", filter: "drop-shadow(0 2px 6px rgba(207,155,59,0.3))" }} /></div>
               <div>
                 <div style={{ fontSize: 9, letterSpacing: 4, color: "#cf9b3b", fontFamily: "'Inter',sans-serif", textTransform: "uppercase", marginBottom: 4, fontWeight: 700 }}>{o.phase}</div>
                 <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 20, color: "#fff", fontWeight: 500, letterSpacing: 1, marginBottom: 6 }}>{o.subtitle}</div>
@@ -694,7 +694,7 @@ function EventsSection() {
             fontSize: 11, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s",
             background: "rgba(207,155,59,0.04)", display: "inline-flex", alignItems: "center", gap: 8
           }}>
-            <img src="/images/logo-ffk.svg" alt="FFK" style={{ height: 16, filter: "brightness(1.2)" }} />
+            <img src="/images/logo-ffk.svg" alt="FFK" width="16" height="16" loading="lazy" style={{ height: 16, filter: "brightness(1.2)" }} />
             Calendrier complet FFK
             <span style={{ fontSize: 14 }}>&#8599;</span>
           </a>
@@ -757,7 +757,7 @@ function CoachSection() {
                 border: "3px solid #cf9b3b",
                 boxShadow: "0 0 30px rgba(207,155,59,0.2), 0 6px 24px rgba(0,0,0,0.4)"
               }}>
-                <img src="/images/rollin-greg-mma.jpg" alt="Maître Philippe Rollin et Greg MMA" loading="lazy" onError={(e) => { e.target.style.opacity = 0.1; e.target.alt = "Photo non disponible"; }} style={{
+                <img src="/images/rollin-greg-mma.jpg" alt="Maître Philippe Rollin et Greg MMA" width="200" height="200" loading="lazy" onError={(e) => { e.target.style.opacity = 0.1; e.target.alt = "Photo non disponible"; }} style={{
                   width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%",
                   filter: "saturate(0.85)"
                 }} />
@@ -788,6 +788,42 @@ function CoachSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ─── YouTube Facade (lazy load) ─── */
+function YouTubeFacade({ videoId, start = 0 }) {
+  const [play, setPlay] = useState(false);
+  return (
+    <div style={{ marginTop: 48, marginBottom: 40, maxWidth: "min(100%, 560px)", margin: "48px auto 40px" }}>
+      <div style={{ fontSize: 10, letterSpacing: 5, color: "#cf9b3b", marginBottom: 16, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>En action</div>
+      <div style={{
+        position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden",
+        border: "1px solid rgba(207,155,59,0.12)", background: "#000", cursor: play ? "default" : "pointer"
+      }} onClick={() => !play && setPlay(true)} role={play ? undefined : "button"} aria-label={play ? undefined : "Lire la vidéo Karaté Mix"} tabIndex={play ? undefined : 0} onKeyDown={(e) => { if (!play && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); setPlay(true); } }}>
+        {play ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?start=${start}&rel=0&modestbranding=1&color=white&autoplay=1`}
+            title="Karaté Mix — Saison 2024/2025 (FFK)"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+          />
+        ) : (
+          <>
+            <img src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`} alt="Karaté Mix — Saison 2024/2025" width="480" height="360" loading="lazy" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "100%", minHeight: "100%", objectFit: "cover" }} />
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.35)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 68, height: 48, background: "rgba(207,155,59,0.9)", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(0,0,0,0.5)", transition: "transform 0.3s" }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#06060a"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+      <div style={{ marginTop: 8, fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.48)", letterSpacing: 1 }}>
+        Source : Fédération Française de Karaté — Karaté Mix Saison 2024/2025
+      </div>
+    </div>
   );
 }
 
@@ -825,32 +861,15 @@ function KarateMixSection() {
               border: "1px solid rgba(207,155,59,0.06)", transition: "all 0.3s",
               opacity: v ? 1 : 0, transitionDelay: `${0.3 + i * 0.12}s`
             }}>
-              <div style={{ marginBottom: 10 }}><img src={item.img} alt={item.title} style={{ width: 150, height: 150, objectFit: "contain" }} /></div>
+              <div style={{ marginBottom: 10 }}><img src={item.img} alt={item.title} width="150" height="150" loading="lazy" style={{ width: 150, height: 150, objectFit: "contain" }} /></div>
               <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 16, color: "#fff", fontWeight: 600, letterSpacing: 1, marginBottom: 8, textTransform: "uppercase" }}>{item.title}</div>
               <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.52)", lineHeight: 1.7 }}>{item.desc}</div>
             </div>
           ))}
         </div>
 
-        {/* Vidéo YouTube FFK */}
-        <div style={{ marginTop: 48, marginBottom: 40, maxWidth: "min(100%, 560px)", margin: "48px auto 40px" }}>
-          <div style={{ fontSize: 10, letterSpacing: 5, color: "#cf9b3b", marginBottom: 16, fontFamily: "'Inter',sans-serif", fontWeight: 700, textTransform: "uppercase" }}>En action</div>
-          <div style={{
-            position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden",
-            border: "1px solid rgba(207,155,59,0.12)", background: "#000"
-          }}>
-            <iframe
-              src="https://www.youtube.com/embed/3d39S4qZYWc?start=13&rel=0&modestbranding=1&color=white"
-              title="Karaté Mix — Saison 2024/2025 (FFK)"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
-            />
-          </div>
-          <div style={{ marginTop: 8, fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.48)", letterSpacing: 1 }}>
-            Source : Fédération Française de Karaté — Karaté Mix Saison 2024/2025
-          </div>
-        </div>
+        {/* Vidéo YouTube FFK — facade pour lazy load */}
+        <YouTubeFacade videoId="3d39S4qZYWc" start={13} />
 
         <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
           <a href="https://www.ffkarate.fr" target="_blank" rel="noopener noreferrer" className="cS" style={{
@@ -859,7 +878,7 @@ function KarateMixSection() {
             fontSize: 11, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s",
             background: "rgba(207,155,59,0.04)", display: "inline-flex", alignItems: "center", gap: 8
           }}>
-            <img src="/images/logo-ffk.svg" alt="FFK" style={{ height: 16, filter: "brightness(1.2)" }} />
+            <img src="/images/logo-ffk.svg" alt="FFK" width="16" height="16" loading="lazy" style={{ height: 16, filter: "brightness(1.2)" }} />
             Site officiel FFK
             <span style={{ fontSize: 14 }}>&#8599;</span>
           </a>
@@ -1049,17 +1068,17 @@ function ContactSection() {
         {!sent ? (
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 8, textAlign: "left" }}>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <input type="text" name="name" placeholder="Nom" required style={{ ...iS, flex: 1, minWidth: 140 }} />
-              <input type="email" name="email" placeholder="Email" required style={{ ...iS, flex: 1, minWidth: 140 }} />
+              <input type="text" name="name" placeholder="Nom" required aria-label="Nom" style={{ ...iS, flex: 1, minWidth: 140 }} />
+              <input type="email" name="email" placeholder="Email" required aria-label="Email" style={{ ...iS, flex: 1, minWidth: 140 }} />
             </div>
-            <select name="type" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.82)" }}>
+            <select name="type" aria-label="Type de demande" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.82)" }}>
               <option value="" style={{ background: "#0a0a10", color: "rgba(255,255,255,0.65)" }}>Type de demande</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Sponsoring / Partenariat</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Presse / Média</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Événement</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Autre</option>
             </select>
-            <textarea name="message" placeholder="Votre message..." rows={4} required style={{ ...iS, resize: "vertical" }} />
+            <textarea name="message" placeholder="Votre message..." rows={4} required aria-label="Message" style={{ ...iS, resize: "vertical" }} />
             <button type="submit" disabled={sending} className="cP" style={{
               padding: "15px", background: sending ? "rgba(207,155,59,0.5)" : "linear-gradient(135deg,#cf9b3b,#a67c2e)", color: "#06060a", border: "none",
               fontFamily: "'Oswald',sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: 3, textTransform: "uppercase",
@@ -1162,7 +1181,7 @@ function FloatingSpotify() {
   return (
     <>
       {/* Onglet droite — desktop: après dismiss / mobile: toujours */}
-      <button className={`mSpotifyTab${dismissed ? " spDismissed" : ""}`} onClick={() => { setDismissed(false); setMobileOpen(true); }} style={{
+      <button className={`mSpotifyTab${dismissed ? " spDismissed" : ""}`} onClick={() => { setDismissed(false); setMobileOpen(true); }} aria-label="Ouvrir les playlists Spotify" style={{
         position: "fixed", right: 0, bottom: 100,
         zIndex: 951, display: "none",
         background: "rgba(6,6,10,0.92)", backdropFilter: "blur(12px)",
@@ -1189,7 +1208,7 @@ function FloatingSpotify() {
         opacity: visible && !dismissed ? 1 : 0, pointerEvents: visible && !dismissed ? "auto" : "none"
       }}>
         {/* Bouton fermer — visible partout */}
-        <button onClick={() => { setDismissed(true); setMobileOpen(false); }} style={{
+        <button onClick={() => { setDismissed(true); setMobileOpen(false); }} aria-label="Fermer les playlists" style={{
           position: "absolute", top: 8, right: 8,
           background: "none", border: "none", color: "rgba(255,255,255,0.4)",
           fontSize: 16, cursor: "pointer", lineHeight: 1, padding: 4, zIndex: 2
@@ -1278,7 +1297,7 @@ function FloatingBio() {
   return (
     <>
       {/* Onglet mobile — petit avatar CZ sur le bord droit */}
-      <button className="mFloatTab" onClick={() => setMobileOpen(true)} style={{
+      <button className="mFloatTab" onClick={() => setMobileOpen(true)} aria-label="Ouvrir la bio" style={{
         position: "fixed", right: 0, top: "50%", transform: "translateY(-50%)",
         zIndex: 951, display: "none",
         background: "rgba(6,6,10,0.92)", backdropFilter: "blur(12px)",
@@ -1305,7 +1324,7 @@ function FloatingBio() {
         opacity: visible ? 1 : 0, pointerEvents: visible ? "auto" : "none"
       }}>
         {/* Bouton fermer mobile */}
-        <button className="mFloatClose" onClick={() => setMobileOpen(false)} style={{
+        <button className="mFloatClose" onClick={() => setMobileOpen(false)} aria-label="Fermer la bio" style={{
           display: "none", position: "absolute", top: 8, right: 8,
           background: "none", border: "none", color: "rgba(255,255,255,0.5)",
           fontSize: 18, cursor: "pointer", lineHeight: 1, padding: 4, zIndex: 2
@@ -1415,7 +1434,7 @@ function FavoriteBanner() {
         <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 13, color: "#cf9b3b", letterSpacing: 3, textTransform: "uppercase", marginBottom: 3 }}>Ajouter en favori</div>
         <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.55)", lineHeight: 1.4 }}>{msg}</div>
       </div>
-      <button onClick={dismiss} style={{
+      <button onClick={dismiss} aria-label="Fermer" style={{
         background: "none", border: "none", color: "rgba(255,255,255,0.4)",
         fontSize: 18, cursor: "pointer", padding: "0 0 0 8px", lineHeight: 1
       }}>&#10005;</button>
