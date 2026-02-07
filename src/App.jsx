@@ -1139,6 +1139,7 @@ function Footer() {
 function FloatingSpotify() {
   const [visible, setVisible] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const playlists = [
     { name: "Workout Motivation", id: "37i9dQZF1DWSJaGvRwFnf6" },
     { name: "Training Mix", id: "2SrsE5W2WSPRmUWHjvXxum" },
@@ -1150,8 +1151,9 @@ function FloatingSpotify() {
       if (!hero || !contact) return;
       const pastHero = hero.getBoundingClientRect().bottom < 0;
       const atContact = contact.getBoundingClientRect().top < window.innerHeight * 0.25;
-      setVisible(pastHero && !atContact);
-      if (!pastHero || atContact) setMobileOpen(false);
+      const show = pastHero && !atContact;
+      setVisible(show);
+      if (!show) { setMobileOpen(false); setDismissed(false); }
     };
     window.addEventListener("scroll", h, { passive: true });
     return () => window.removeEventListener("scroll", h);
@@ -1179,18 +1181,18 @@ function FloatingSpotify() {
 
       {/* Carte flottante droite — sous la bio */}
       <div className={`floatingSpotify${mobileOpen ? " mSpOpen" : ""}`} style={{
-        position: "fixed", right: 20, bottom: 80, transform: `translateX(${visible ? 0 : 280}px)`,
+        position: "fixed", right: 20, bottom: 80, transform: `translateX(${visible && !dismissed ? 0 : 280}px)`,
         zIndex: 950, width: 220, padding: "22px 18px",
         background: "rgba(6,6,10,0.94)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
         border: "1px solid rgba(30,215,96,0.12)", boxShadow: "0 8px 40px rgba(0,0,0,0.5)",
         transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s",
-        opacity: visible ? 1 : 0, pointerEvents: visible ? "auto" : "none"
+        opacity: visible && !dismissed ? 1 : 0, pointerEvents: visible && !dismissed ? "auto" : "none"
       }}>
-        {/* Bouton fermer mobile */}
-        <button className="mSpotifyClose" onClick={() => setMobileOpen(false)} style={{
-          display: "none", position: "absolute", top: 8, right: 8,
-          background: "none", border: "none", color: "rgba(255,255,255,0.5)",
-          fontSize: 18, cursor: "pointer", lineHeight: 1, padding: 4, zIndex: 2
+        {/* Bouton fermer — visible partout */}
+        <button onClick={() => { setDismissed(true); setMobileOpen(false); }} style={{
+          position: "absolute", top: 8, right: 8,
+          background: "none", border: "none", color: "rgba(255,255,255,0.4)",
+          fontSize: 16, cursor: "pointer", lineHeight: 1, padding: 4, zIndex: 2
         }}>&#10005;</button>
 
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, #1DB954, #1ed760, #1DB954)" }} />
