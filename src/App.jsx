@@ -990,6 +990,7 @@ function SponsorsSection() {
             Chaque partenaire bénéficie également d'un emplacement sur la <span style={{ color: "rgba(255,255,255,0.62)" }}>bannière sponsors du site</span>, visible sur toutes les pages.
           </p>
         </div>
+        <div style={{ marginTop: 48 }}><SponsorMarquee /></div>
       </div>
     </section>
   );
