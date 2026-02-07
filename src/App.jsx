@@ -1188,6 +1188,24 @@ function FloatingBio() {
         <div style={{ fontSize: 9, color: "rgba(255,255,255,0.65)", letterSpacing: 2, fontFamily: "'Inter',sans-serif", marginTop: 4 }}>-70KG · KARATÉ MIX FFK</div>
       </div>
 
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 12 }}>
+        <p style={{
+          fontFamily: "'Inter',sans-serif", fontSize: 11, lineHeight: 1.7,
+          color: "rgba(255,255,255,0.85)", margin: 0
+        }}>
+          Passionné d'arts martiaux depuis l'enfance, Carmelo Zambelli est un jeune talent du Karaté Mix. Champion de France à 18 ans, il poursuit son ascension sur le circuit européen.
+        </p>
+      </div>
+
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 12, marginBottom: 14 }}>
+        <p style={{
+          fontFamily: "'Inter',sans-serif", fontSize: 10, lineHeight: 1.7,
+          color: "rgba(255,255,255,0.75)", margin: 0
+        }}>
+          Pour franchir une nouvelle étape, il recherche des partenaires prêts à soutenir un athlète ambitieux et à forte visibilité.
+        </p>
+      </div>
+
       <div style={{ display: "flex", justifyContent: "center", gap: 12, marginBottom: 10 }}>
         {[
           { n: "18", l: "Wins" }, { n: "14", l: "Sub" }, { n: "86%", l: "Rate" },
@@ -1198,8 +1216,6 @@ function FloatingBio() {
           </div>
         ))}
       </div>
-
-      <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 10, letterSpacing: 2, color: "#cf9b3b", textAlign: "center", marginBottom: 10 }}>2x Champion de France</div>
 
       <a href="#sponsors" className="cP" style={{
         display: "block", textAlign: "center", padding: "10px 0",
