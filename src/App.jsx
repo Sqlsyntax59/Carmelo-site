@@ -169,7 +169,7 @@ function Navbar({ activeSection }) {
         <div style={{
           position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
           background: "#06060a", display: "flex", flexDirection: "column",
-          alignItems: "center", justifyContent: "center", gap: 28, zIndex: 1001
+          alignItems: "center", justifyContent: "center", gap: 28, zIndex: 999
         }}>
           {links.map(l => (
             <a key={l.id} href={`#${l.id}`} onClick={() => setOpen(false)} style={{
