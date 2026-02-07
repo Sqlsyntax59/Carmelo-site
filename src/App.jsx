@@ -279,7 +279,7 @@ function HeroSection() {
             </svg>
             Instagram
           </a>
-          <a href="https://tiktok.com/@carmelooooo" target="_blank" rel="noopener noreferrer" className="cS" style={{ padding: "14px 32px", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", textDecoration: "none", fontFamily: "'Oswald',sans-serif", fontWeight: 500, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s", background: "transparent", display: "inline-flex", alignItems: "center", gap: 10 }}>
+          <a href="https://www.tiktok.com/@carmeloooooo" target="_blank" rel="noopener noreferrer" className="cS" style={{ padding: "14px 32px", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", textDecoration: "none", fontFamily: "'Oswald',sans-serif", fontWeight: 500, fontSize: 12, letterSpacing: 3, textTransform: "uppercase", transition: "all 0.3s", background: "transparent", display: "inline-flex", alignItems: "center", gap: 10 }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.48a8.18 8.18 0 004.76 1.52V7.56a4.84 4.84 0 01-1-.87z" fill="#25F4EE"/>
               <path d="M16.37 2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-1.69-.55 2.89 2.89 0 004.57-2.34V2h3.45z" fill="#FE2C55"/>
