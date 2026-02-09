@@ -375,16 +375,36 @@ function GallerySection() {
   const timerRef = useRef(null);
   const carouselRef = useRef(null);
   const [lightbox, setLightbox] = useState(false);
+  const [cloudPhotos, setCloudPhotos] = useState(null);
+
+  useEffect(() => {
+    fetch("/.netlify/functions/cloudinary-list")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        if (data.images && data.images.length > 0) {
+          setCloudPhotos(data.images.map((img, i) => ({
+            id: img.public_id,
+            src: img.url,
+            pos: "center",
+            desc: img.caption || "",
+            alt: img.caption || `Photo carrousel ${i + 1}`,
+          })));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const photos = cloudPhotos || PHOTOS;
 
   useEffect(() => {
     if (paused) return;
-    timerRef.current = setInterval(() => setActive(p => (p + 1) % PHOTOS.length), 4000);
+    timerRef.current = setInterval(() => setActive(p => (p + 1) % photos.length), 4000);
     return () => clearInterval(timerRef.current);
-  }, [paused]);
+  }, [paused, photos.length]);
 
   useSwipe(carouselRef, {
-    onSwipeLeft: () => { setActive(p => (p + 1) % PHOTOS.length); setPaused(true); },
-    onSwipeRight: () => { setActive(p => (p - 1 + PHOTOS.length) % PHOTOS.length); setPaused(true); },
+    onSwipeLeft: () => { setActive(p => (p + 1) % photos.length); setPaused(true); },
+    onSwipeRight: () => { setActive(p => (p - 1 + photos.length) % photos.length); setPaused(true); },
     onTap: () => { setPaused(true); setLightbox(true); },
   });
 
@@ -424,7 +444,7 @@ function GallerySection() {
             border: "1px solid rgba(207,155,59,0.08)"
           }}
         >
-          {PHOTOS.map((p, i) => (
+          {photos.map((p, i) => (
             <img
               key={p.id}
               src={p.src}
@@ -448,17 +468,17 @@ function GallerySection() {
             <div style={{
               fontFamily: "'Oswald',sans-serif", fontSize: "clamp(12px,2vw,16px)",
               color: "rgba(255,255,255,0.82)", letterSpacing: 3, textTransform: "uppercase", fontWeight: 500
-            }}>{PHOTOS[active].desc}</div>
+            }}>{photos[active]?.desc}</div>
           </div>
 
           {/* Prev/Next */}
-          <button onClick={() => { setActive(p => (p - 1 + PHOTOS.length) % PHOTOS.length); setPaused(true); }} className="galBtn" aria-label="Photo précédente" style={{
+          <button onClick={() => { setActive(p => (p - 1 + photos.length) % photos.length); setPaused(true); }} className="galBtn" aria-label="Photo précédente" style={{
             position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", zIndex: 3,
             background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)",
             color: "#fff", width: 44, height: 44, cursor: "pointer", fontSize: 18,
             display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s", backdropFilter: "blur(8px)"
           }}>&#8249;</button>
-          <button onClick={() => { setActive(p => (p + 1) % PHOTOS.length); setPaused(true); }} className="galBtn" aria-label="Photo suivante" style={{
+          <button onClick={() => { setActive(p => (p + 1) % photos.length); setPaused(true); }} className="galBtn" aria-label="Photo suivante" style={{
             position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", zIndex: 3,
             background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.15)",
             color: "#fff", width: 44, height: 44, cursor: "pointer", fontSize: 18,
@@ -468,7 +488,7 @@ function GallerySection() {
           {/* Progress bar */}
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 3, background: "rgba(255,255,255,0.05)", zIndex: 2 }}>
             <div style={{
-              height: "100%", background: "#cf9b3b", width: `${((active + 1) / PHOTOS.length) * 100}%`,
+              height: "100%", background: "#cf9b3b", width: `${((active + 1) / photos.length) * 100}%`,
               transition: "width 0.5s ease"
             }} />
           </div>
@@ -476,7 +496,7 @@ function GallerySection() {
 
         {/* Thumbnails with real images */}
         <div style={{ display: "flex", gap: 3, marginTop: 3 }}>
-          {PHOTOS.map((p, i) => (
+          {photos.map((p, i) => (
             <button key={i} onClick={() => { setActive(i); setPaused(true); }} style={{
               flex: 1, padding: 0, cursor: "pointer", border: "none",
               borderBottom: i === active ? "2px solid #cf9b3b" : "2px solid transparent",
@@ -493,7 +513,7 @@ function GallerySection() {
         </div>
 
       </div>
-      {lightbox && <Lightbox photos={PHOTOS} active={active} onClose={() => setLightbox(false)} onPrev={() => setActive(p => (p - 1 + PHOTOS.length) % PHOTOS.length)} onNext={() => setActive(p => (p + 1) % PHOTOS.length)} />}
+      {lightbox && <Lightbox photos={photos} active={active} onClose={() => setLightbox(false)} onPrev={() => setActive(p => (p - 1 + photos.length) % photos.length)} onNext={() => setActive(p => (p + 1) % photos.length)} />}
     </section>
   );
 }
