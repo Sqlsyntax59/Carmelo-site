@@ -1061,18 +1061,24 @@ function ContactSection() {
   const [ref, v] = useReveal();
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
   const iS = { padding: "14px 18px", background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)", color: "#fff", fontFamily: "'Inter',sans-serif", fontSize: 13, outline: "none", transition: "border 0.3s", width: "100%", boxSizing: "border-box" };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    const data = new FormData(e.target);
+    setError(false);
+    const formData = new FormData(e.target);
+    formData.append("form-name", "contact");
     try {
-      await fetch("https://formspree.io/f/VOTRE_ID", {
-        method: "POST", body: data, headers: { Accept: "application/json" }
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
       });
-      setSent(true);
-    } catch { setSent(true); }
+      if (res.ok) setSent(true);
+      else setError(true);
+    } catch { setError(true); }
     setSending(false);
   };
 
@@ -1087,18 +1093,30 @@ function ContactSection() {
 
         {!sent ? (
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 8, textAlign: "left" }}>
+            <input type="hidden" name="form-name" value="contact" />
+            <p style={{ display: "none" }}><input name="bot-field" /></p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <input type="text" name="name" placeholder="Nom" required aria-label="Nom" style={{ ...iS, flex: 1, minWidth: 140 }} />
-              <input type="email" name="email" placeholder="Email" required aria-label="Email" style={{ ...iS, flex: 1, minWidth: 140 }} />
+              <input type="text" name="name" placeholder="Nom / Prénom" required aria-label="Nom" style={{ ...iS, flex: 1, minWidth: 140 }} />
+              <input type="email" name="email" placeholder="Email professionnel" required aria-label="Email" style={{ ...iS, flex: 1, minWidth: 140 }} />
             </div>
-            <select name="type" aria-label="Type de demande" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.82)" }}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <input type="text" name="company" placeholder="Société / Organisation" aria-label="Société" style={{ ...iS, flex: 1, minWidth: 140 }} />
+              <input type="tel" name="phone" placeholder="Téléphone (optionnel)" aria-label="Téléphone" style={{ ...iS, flex: 1, minWidth: 140 }} />
+            </div>
+            <select name="type" required aria-label="Type de demande" style={{ ...iS, cursor: "pointer", color: "rgba(255,255,255,0.82)" }}>
               <option value="" style={{ background: "#0a0a10", color: "rgba(255,255,255,0.65)" }}>Type de demande</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Sponsoring / Partenariat</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Presse / Média</option>
-              <option style={{ background: "#0a0a10", color: "#fff" }}>Événement</option>
+              <option style={{ background: "#0a0a10", color: "#fff" }}>Événement / Compétition</option>
+              <option style={{ background: "#0a0a10", color: "#fff" }}>Club / Recrutement</option>
               <option style={{ background: "#0a0a10", color: "#fff" }}>Autre</option>
             </select>
-            <textarea name="message" placeholder="Votre message..." rows={4} required aria-label="Message" style={{ ...iS, resize: "vertical" }} />
+            <textarea name="message" placeholder="Décrivez votre projet ou proposition..." rows={5} required aria-label="Message" style={{ ...iS, resize: "vertical" }} />
+            {error && (
+              <div style={{ padding: "10px 14px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", color: "#ef4444", fontSize: 12, textAlign: "center", fontFamily: "'Inter',sans-serif" }}>
+                Erreur lors de l'envoi. Réessayez ou contactez directement carmelozambelli31@gmail.com
+              </div>
+            )}
             <button type="submit" disabled={sending} className="cP" style={{
               padding: "15px", background: sending ? "rgba(207,155,59,0.5)" : "linear-gradient(135deg,#cf9b3b,#a67c2e)", color: "#06060a", border: "none",
               fontFamily: "'Oswald',sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: 3, textTransform: "uppercase",
@@ -1109,7 +1127,7 @@ function ContactSection() {
           <div style={{ padding: "44px 28px", background: "rgba(207,155,59,0.04)", border: "1px solid rgba(207,155,59,0.12)" }}>
             <div style={{ fontSize: 32, marginBottom: 14 }}>🥋</div>
             <div style={{ fontFamily: "'Oswald',sans-serif", fontSize: 24, color: "#fff", letterSpacing: 4, marginBottom: 6, fontWeight: 700 }}>MESSAGE ENVOYÉ</div>
-            <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.52)" }}>Réponse sous 48h.</div>
+            <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.52)", lineHeight: 1.8 }}>Merci pour votre intérêt. Carmelo vous répondra sous 48h.</div>
           </div>
         )}
       </div>
